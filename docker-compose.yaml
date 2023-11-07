@@ -6,4 +6,4 @@ services:
     ports:
       - 9000:8080
     volumes:
-      - .:/home/Development/Projects/previsaotempo/app
+      - .:/home/projects/previsaotempo
