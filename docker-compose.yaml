@@ -6,4 +6,4 @@ services:
     ports:
       - 9000:8080
     volumes:
-      - .:/home/projects/previsaotempo
+      - .:/home/projects/checklist

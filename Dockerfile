@@ -1,6 +1,6 @@
 FROM eclipse-temurin:17-jdk-alpine as build
-WORKDIR /home/projects/previsaotempo
-VOLUME /home/projects/previsaotempo
+WORKDIR /home/projects/checklist
+VOLUME /home/projects/checklist
 COPY mvnw .
 COPY .mvn .mvn
 COPY pom.xml .
