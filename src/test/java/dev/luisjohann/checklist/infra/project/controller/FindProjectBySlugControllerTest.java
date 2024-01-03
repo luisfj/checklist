@@ -2,6 +2,7 @@ package dev.luisjohann.checklist.infra.project.controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -9,6 +10,7 @@ import org.springframework.http.MediaType;
 import dev.luisjohann.checklist.ChecklistApplicationBaseTest;
 import dev.luisjohann.checklist.domain.project.IProjectRepository;
 import dev.luisjohann.checklist.domain.project.Project;
+import dev.luisjohann.checklist.helper.MockProjectHelper;
 import dev.luisjohann.checklist.infra.project.controller.response.FindProjectBySlugResponse;
 
 public class FindProjectBySlugControllerTest extends ChecklistApplicationBaseTest {
@@ -17,27 +19,27 @@ public class FindProjectBySlugControllerTest extends ChecklistApplicationBaseTes
     @Autowired
     IProjectRepository repository;
 
-    Project mockObject;
+    Project project;
+    Project notExistsProject;
 
+    @BeforeAll
     void createOneMockProject() {
-        mockObject = new Project("teste_find_slug", "Test Find", "Testing find end point");
-        repository.createProject(mockObject);
+        project = MockProjectHelper.createBean(repository);
+        notExistsProject = MockProjectHelper.createNotPersistedBean();
     }
 
     @Test
     void getByExistingSlug_thenReturnProject() {
-        createOneMockProject();
-
         webTestClient
                 .get()
-                .uri(BASE_URI + mockObject.getSlug())
+                .uri(BASE_URI + project.getSlug())
                 .accept(MediaType.APPLICATION_JSON)
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody(FindProjectBySlugResponse.class).value(resp -> {
-                    assertEquals(resp.slug(), mockObject.getSlug());
-                    assertEquals(resp.name(), mockObject.getName());
-                    assertEquals(resp.description(), mockObject.getDescription());
+                    assertEquals(resp.slug(), project.getSlug());
+                    assertEquals(resp.name(), project.getName());
+                    assertEquals(resp.description(), project.getDescription());
                 });
     }
 
@@ -45,7 +47,7 @@ public class FindProjectBySlugControllerTest extends ChecklistApplicationBaseTes
     void getByNotExistingSlug_thenReturnStatusNotFound() {
         webTestClient
                 .get()
-                .uri(BASE_URI + "not_exists_slug")
+                .uri(BASE_URI + notExistsProject.getSlug())
                 .accept(MediaType.APPLICATION_JSON)
                 .exchange()
                 .expectStatus().isNotFound();

@@ -19,16 +19,12 @@ import dev.luisjohann.checklist.domain.project.Project;
 import dev.luisjohann.checklist.domain.project.Worker;
 import dev.luisjohann.checklist.domain.project.exceptions.ProjectNotFoundException;
 import dev.luisjohann.checklist.domain.project.exceptions.WorkerNotFoundException;
+import dev.luisjohann.checklist.helper.MockProjectHelper;
+import dev.luisjohann.checklist.helper.MockWorkerHelper;
 import dev.luisjohann.checklist.infra.project.controller.response.WorkersFromProjectResponse;
 
 public class ListWorkersFromProjectBySlugControllerTest extends ChecklistApplicationBaseTest {
         private static final String BASE_URI = "/project/worker/";
-
-        private static final String VALID_SLUG_PROJECT = "existing_slug";
-        private static final String VALID_SLUG_PROJECT_NO_WORKERS = "existing_slug_no_workers";
-        private static final String INVALID_SLUG_PROJECT = "existing_slug_not_exists";
-        private static final String WORKER_SLUG = "worker_name";
-        private static final String WORKER_SLUG_OTHER = "worker_name_other";
 
         @Autowired
         private IProjectRepository projectRepository;
@@ -37,17 +33,18 @@ public class ListWorkersFromProjectBySlugControllerTest extends ChecklistApplica
 
         private List<WorkersFromProjectResponse> responseExpected = new ArrayList<>();
 
+        private Project projectWithWorkers;
+        private Project projectWithoutWorkers;
+        private Project projectInvalid;
+
         @BeforeAll
         void start() {
-                Project project = new Project(VALID_SLUG_PROJECT, VALID_SLUG_PROJECT, null);
-                Project project2 = new Project(VALID_SLUG_PROJECT_NO_WORKERS, VALID_SLUG_PROJECT_NO_WORKERS, null);
-                projectRepository.createProject(project);
-                projectRepository.createProject(project2);
+                projectWithWorkers = MockProjectHelper.createBean(projectRepository);
+                projectWithoutWorkers = MockProjectHelper.createOtherBean(projectRepository);
+                projectInvalid = MockProjectHelper.createNotPersistedBean();
 
-                Worker worker = workerRepository.createWorker(new Worker(WORKER_SLUG, WORKER_SLUG, project)).block();
-                Worker worker2 = workerRepository
-                                .createWorker(new Worker(WORKER_SLUG_OTHER, WORKER_SLUG_OTHER, project))
-                                .block();
+                Worker worker = MockWorkerHelper.createBean(workerRepository, projectWithWorkers);
+                Worker worker2 = MockWorkerHelper.createOtherBean(workerRepository, projectWithWorkers);
 
                 responseExpected.add(
                                 new WorkersFromProjectResponse(worker2.getSlug(), worker2.getName()));
@@ -59,7 +56,7 @@ public class ListWorkersFromProjectBySlugControllerTest extends ChecklistApplica
         void testWithExistingProjectSlug_thenReturnWorkersFromProject() {
                 webTestClient
                                 .get()
-                                .uri(BASE_URI + VALID_SLUG_PROJECT)
+                                .uri(BASE_URI + projectWithWorkers.getSlug())
                                 .accept(MediaType.APPLICATION_JSON)
                                 .exchange()
                                 .expectStatus().isOk()
@@ -73,7 +70,7 @@ public class ListWorkersFromProjectBySlugControllerTest extends ChecklistApplica
         void testWithExistingProjectSlugWhereNotHaveWorkers_thenReturnWorkerNotFoundException() {
                 webTestClient
                                 .get()
-                                .uri(BASE_URI + VALID_SLUG_PROJECT_NO_WORKERS)
+                                .uri(BASE_URI + projectWithoutWorkers.getSlug())
                                 .accept(MediaType.APPLICATION_JSON)
                                 .exchange()
                                 .expectStatus().isNotFound()
@@ -84,7 +81,7 @@ public class ListWorkersFromProjectBySlugControllerTest extends ChecklistApplica
         void testWithNotExistingProjectSlug_thenReturnEmptyWorkers() {
                 webTestClient
                                 .get()
-                                .uri(BASE_URI + INVALID_SLUG_PROJECT)
+                                .uri(BASE_URI + projectInvalid.getSlug())
                                 .accept(MediaType.APPLICATION_JSON)
                                 .exchange()
                                 .expectStatus().isNotFound()

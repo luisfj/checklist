@@ -12,27 +12,30 @@ import dev.luisjohann.checklist.domain.project.IProjectRepository;
 import dev.luisjohann.checklist.domain.project.Project;
 import dev.luisjohann.checklist.domain.project.exceptions.ProjectNotFoundException;
 import dev.luisjohann.checklist.domain.project.exceptions.WorkerAlreadyExistsException;
+import dev.luisjohann.checklist.helper.MockProjectHelper;
 import dev.luisjohann.checklist.infra.project.controller.request.AddWorkerToProjectRequest;
 import dev.luisjohann.checklist.infra.project.controller.response.AddWorkerToProjectResponse;
 
 public class AddWorkerToProjectControllerTest extends ChecklistApplicationBaseTest {
     private static final String URI = "/project/worker";
-    private static final String VALID_SLUG_PROJECT = "existing_slug";
-    private static final String VALID_SLUG_PROJECT_2 = "existing_slug_2";
-    private static final String INVALID_SLUG_PROJECT = "not_existing_slug";
 
     @Autowired
     private IProjectRepository projectRepository;
 
+    private Project project;
+    private Project otherProject;
+    private Project invalidProject;
+
     @BeforeAll
     public void start() {
-        projectRepository.createProject(new Project(VALID_SLUG_PROJECT, VALID_SLUG_PROJECT, null));
-        projectRepository.createProject(new Project(VALID_SLUG_PROJECT_2, VALID_SLUG_PROJECT_2, null));
+        project = MockProjectHelper.createBean(projectRepository);
+        otherProject = MockProjectHelper.createOtherBean(projectRepository);
+        invalidProject = MockProjectHelper.createNotPersistedBean();
     }
 
     @Test
     void testAddWorkerWithInvalidSlugProject_thenRetrieveError() {
-        var workerWithInvalidProjectSlug = buildWorker("Worker Name", INVALID_SLUG_PROJECT);
+        var workerWithInvalidProjectSlug = buildWorker("Worker Name", invalidProject.getSlug());
 
         webTestClient
                 .post()
@@ -46,7 +49,7 @@ public class AddWorkerToProjectControllerTest extends ChecklistApplicationBaseTe
 
     @Test
     void testAddWorkersWithSameNameInSameProject_thenRetriveWorkerExists() {
-        var workerWithValidProjectSlug = buildWorker("Duplicate Worker Name", VALID_SLUG_PROJECT);
+        var workerWithValidProjectSlug = buildWorker("Duplicate Worker Name", project.getSlug());
 
         webTestClient
                 .post()
@@ -73,8 +76,8 @@ public class AddWorkerToProjectControllerTest extends ChecklistApplicationBaseTe
     @Test
     void shouldAddWorkersWithSameNameInDiferentProjects() {
         var workerName = "Duplicate Worker Dif Project";
-        var workerWithValidProjectSlug = buildWorker(workerName, VALID_SLUG_PROJECT);
-        var workerWithValidProjectSlug2 = buildWorker(workerName, VALID_SLUG_PROJECT_2);
+        var workerWithValidProjectSlug = buildWorker(workerName, project.getSlug());
+        var workerWithValidProjectSlug2 = buildWorker(workerName, otherProject.getSlug());
 
         webTestClient
                 .post()
@@ -103,7 +106,7 @@ public class AddWorkerToProjectControllerTest extends ChecklistApplicationBaseTe
 
     @Test
     void shouldAddWorkerWithValidSlugProject() {
-        var workerWithValidProjectSlug = buildWorker("Correct Worker Name", VALID_SLUG_PROJECT);
+        var workerWithValidProjectSlug = buildWorker("Correct Worker Name", project.getSlug());
 
         webTestClient
                 .post()

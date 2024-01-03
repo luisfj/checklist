@@ -1,6 +1,5 @@
 package dev.luisjohann.checklist.infra.project.controller;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 import org.junit.jupiter.api.AfterEach;
@@ -17,31 +16,31 @@ import dev.luisjohann.checklist.domain.project.Project;
 import dev.luisjohann.checklist.domain.project.Worker;
 import dev.luisjohann.checklist.domain.project.exceptions.ProjectNotFoundException;
 import dev.luisjohann.checklist.domain.project.exceptions.WorkerNotFoundException;
+import dev.luisjohann.checklist.helper.MockProjectHelper;
+import dev.luisjohann.checklist.helper.MockWorkerHelper;
 
 public class RemoveWorkerFromProjectControllerTest extends ChecklistApplicationBaseTest {
     private static final String URI = "/project/worker/%s/%s";
-    private static final String VALID_SLUG_PROJECT = "existing_slug";
-    private static final String INVALID_SLUG_PROJECT = "existing_slug_not_exists";
-    private static final String WORKER_SLUG = "worker_name";
-    private static final String INVALID_WORKER_SLUG = "worker_name_not_exists";
 
     @Autowired
     private IProjectRepository projectRepository;
     @Autowired
     private IWorkerRepository workerRepository;
     private Project project;
+    private Project projectInvalid;
     private Worker worker;
+    private Worker workerInvalid;
 
     @BeforeAll
     void start() {
-        project = new Project(VALID_SLUG_PROJECT, VALID_SLUG_PROJECT, null);
-        projectRepository.createProject(project);
-
+        project = MockProjectHelper.createBean(projectRepository);
+        projectInvalid = MockProjectHelper.createNotPersistedBean();
     }
 
     @BeforeEach
     void createWorker() {
-        worker = workerRepository.createWorker(new Worker(WORKER_SLUG, WORKER_SLUG, project)).block();
+        worker = MockWorkerHelper.createBean(workerRepository, project);
+        workerInvalid = MockWorkerHelper.createNotPersistBean(project);
     }
 
     @AfterEach
@@ -52,7 +51,7 @@ public class RemoveWorkerFromProjectControllerTest extends ChecklistApplicationB
 
     @Test
     void testRemoveWorkerWithProjectNotExists_thenReturnProjectNotFoundException() {
-        var requestUri = buildUri(WORKER_SLUG, INVALID_SLUG_PROJECT);
+        var requestUri = buildUri(worker.getSlug(), projectInvalid.getSlug());
 
         webTestClient
                 .delete()
@@ -65,7 +64,7 @@ public class RemoveWorkerFromProjectControllerTest extends ChecklistApplicationB
 
     @Test
     void testRemoveWorkerWithWorkerNameNotExists_thenReturnWorkerNotFoundException() {
-        var requestUri = buildUri(INVALID_WORKER_SLUG, VALID_SLUG_PROJECT);
+        var requestUri = buildUri(workerInvalid.getSlug(), project.getSlug());
 
         webTestClient
                 .delete()
@@ -78,9 +77,7 @@ public class RemoveWorkerFromProjectControllerTest extends ChecklistApplicationB
 
     @Test
     void shouldRemoveWorker() {
-        assertNotNull(workerRepository.findBySlugAndProjectSlug(WORKER_SLUG, VALID_SLUG_PROJECT).block());
-
-        var requestUri = buildUri(WORKER_SLUG, VALID_SLUG_PROJECT);
+        var requestUri = buildUri(worker.getSlug(), project.getSlug());
 
         webTestClient
                 .delete()
@@ -89,7 +86,7 @@ public class RemoveWorkerFromProjectControllerTest extends ChecklistApplicationB
                 .exchange()
                 .expectStatus().isOk();
 
-        assertNull(workerRepository.findByNameAndProjectSlug(WORKER_SLUG, VALID_SLUG_PROJECT).block());
+        assertNull(workerRepository.findByNameAndProjectSlug(worker.getSlug(), project.getSlug()).block());
     }
 
     String buildUri(String workerSlug, String projectSlug) {

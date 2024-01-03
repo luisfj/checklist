@@ -21,7 +21,7 @@ public class MockProjectHelper {
         return bean;
     }
 
-    public static final Project createNotPersistBean() {
+    public static final Project createNotPersistedBean() {
         return new Project(PROJECT_INVALID_SLUG, PROJECT_INVALID_SLUG, null);
     }
 
