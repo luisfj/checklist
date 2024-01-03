@@ -22,7 +22,7 @@ public class TodoRepositoryInMemory implements ITodoRepository {
     @Override
     public Mono<Todo> updateTodo(Todo todo) {
         var index = this.todos.indexOf(todo);
-        if (index < 0) {
+        if (index < 0 || !this.todos.get(index).getProject().equals(todo.getProject())) {
             return Mono.error(new TodoNotFoundException(todo.getId(), todo.getProject().getSlug()));
         }
         this.todos.set(index, todo);
@@ -33,6 +33,15 @@ public class TodoRepositoryInMemory implements ITodoRepository {
     public Mono<Void> removeTodo(Todo todo) {
         this.todos.removeIf(w -> w.getId().equals(todo.getId())
                 && w.getProject().getSlug().equals(todo.getProject().getSlug()));
+        return Mono.empty();
+    }
+
+    @Override
+    public Mono<Todo> findByIdAndProjectSlug(String id, String projectSlug) {
+        var todo = this.todos.stream().filter(t -> t.getId().equals(id) && t.getProject().getSlug().equals(projectSlug))
+                .findFirst();
+        if (todo.isPresent())
+            return Mono.just(todo.get());
         return Mono.empty();
     }
 

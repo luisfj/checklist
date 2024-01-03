@@ -11,5 +11,7 @@ public interface ITodoRepository {
 
     Mono<Void> removeTodo(Todo todo);
 
+    Mono<Todo> findByIdAndProjectSlug(String id, String projectSlug);
+
     Flux<Todo> listAllTodosByProjectSlug(String projectSlug);
 }
