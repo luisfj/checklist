@@ -26,4 +26,29 @@ public class Project implements Serializable {
         return description;
     }
 
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((slug == null) ? 0 : slug.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Project other = (Project) obj;
+        if (slug == null) {
+            if (other.slug != null)
+                return false;
+        } else if (!slug.equals(other.slug))
+            return false;
+        return true;
+    }
+
 }
