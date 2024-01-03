@@ -2,7 +2,7 @@ package dev.luisjohann.checklist.domain.project.exceptions;
 
 import org.springframework.http.HttpStatus;
 
-import dev.luisjohann.checklist.domain.IChecklistException;
+import dev.luisjohann.checklist.domain.exception.IChecklistException;
 
 public class WorkersNotFoundForTheProjectException extends IChecklistException {
 

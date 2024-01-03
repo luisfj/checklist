@@ -1,4 +1,4 @@
-package dev.luisjohann.checklist.domain;
+package dev.luisjohann.checklist.domain.exception;
 
 import org.springframework.http.HttpStatus;
 

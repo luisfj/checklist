@@ -2,7 +2,7 @@ package dev.luisjohann.checklist.domain.todo.exception;
 
 import org.springframework.http.HttpStatus;
 
-import dev.luisjohann.checklist.domain.IChecklistException;
+import dev.luisjohann.checklist.domain.exception.IChecklistException;
 
 public class TodoNotFoundException extends IChecklistException {
 
