@@ -6,7 +6,7 @@
  <img src="https://img.shields.io/badge/-LinkedIn-02569B?logo=linkedin&logoColor=white&style=fot-the-badge" alt="luis-fernando-johann" />
 </p>
 
-API que disponibiliza um controle de tarefas simplificado.
+API que disponibiliza um controle de tarefas reativosimplificado.
 
 ## Tecnologias
  
