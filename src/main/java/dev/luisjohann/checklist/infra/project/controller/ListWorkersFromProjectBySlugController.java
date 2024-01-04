@@ -14,14 +14,14 @@ import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Flux;
 
 @RestController
-@RequestMapping("/project")
+@RequestMapping("/worker")
 @RequiredArgsConstructor
 @Slf4j
 public class ListWorkersFromProjectBySlugController {
 
         final ListWorkersFromProjectBySlugService service;
 
-        @GetMapping("/worker/{project-slug}")
+        @GetMapping("/{project-slug}")
         @ResponseStatus(HttpStatus.OK)
         public Flux<WorkersFromProjectResponse> findWorkersByProjectSlug(
                         @PathVariable("project-slug") String projectSlug) {

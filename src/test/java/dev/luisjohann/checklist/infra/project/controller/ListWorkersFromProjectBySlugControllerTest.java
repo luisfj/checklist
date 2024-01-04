@@ -24,7 +24,7 @@ import dev.luisjohann.checklist.helper.MockWorkerHelper;
 import dev.luisjohann.checklist.infra.project.controller.response.WorkersFromProjectResponse;
 
 public class ListWorkersFromProjectBySlugControllerTest extends ChecklistApplicationBaseTest {
-        private static final String BASE_URI = "/project/worker/";
+        private static final String BASE_URI = "/worker/";
 
         @Autowired
         private IProjectRepository projectRepository;
@@ -40,7 +40,7 @@ public class ListWorkersFromProjectBySlugControllerTest extends ChecklistApplica
         @BeforeAll
         void start() {
                 projectWithWorkers = MockProjectHelper.createBean(projectRepository);
-                projectWithoutWorkers = MockProjectHelper.createOtherBean(projectRepository);
+                projectWithoutWorkers = MockProjectHelper.createBean(projectRepository);
                 projectInvalid = MockProjectHelper.createNotPersistedBean();
 
                 Worker worker = MockWorkerHelper.createBean(workerRepository, projectWithWorkers);

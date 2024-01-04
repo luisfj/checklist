@@ -49,7 +49,7 @@ public class UpdateTodoControllerTest extends ChecklistApplicationBaseTest {
     @BeforeAll
     public void start() {
         project = MockProjectHelper.createBean(projectRepository);
-        otherProject = MockProjectHelper.createOtherBean(projectRepository);
+        otherProject = MockProjectHelper.createBean(projectRepository);
         worker = MockWorkerHelper.createBean(workerRepository, project);
         otherWorker = MockWorkerHelper.createOtherBean(workerRepository, otherProject);
     }

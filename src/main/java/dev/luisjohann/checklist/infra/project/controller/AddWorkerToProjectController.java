@@ -20,14 +20,14 @@ import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Mono;
 
 @RestController
-@RequestMapping("/project")
+@RequestMapping("/worker")
 @RequiredArgsConstructor
 @Slf4j
 public class AddWorkerToProjectController {
 
         final AddWorkerToProjectService service;
 
-        @PostMapping("/worker")
+        @PostMapping
         @ResponseStatus(HttpStatus.CREATED)
         public Mono<ResponseEntity<AddWorkerToProjectResponse>> addWorker(
                         @RequestBody AddWorkerToProjectRequest request) {

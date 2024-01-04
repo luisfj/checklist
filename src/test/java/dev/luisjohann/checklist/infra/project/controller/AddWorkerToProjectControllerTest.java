@@ -17,7 +17,7 @@ import dev.luisjohann.checklist.infra.project.controller.request.AddWorkerToProj
 import dev.luisjohann.checklist.infra.project.controller.response.AddWorkerToProjectResponse;
 
 public class AddWorkerToProjectControllerTest extends ChecklistApplicationBaseTest {
-    private static final String URI = "/project/worker";
+    private static final String URI = "/worker";
 
     @Autowired
     private IProjectRepository projectRepository;
@@ -29,7 +29,7 @@ public class AddWorkerToProjectControllerTest extends ChecklistApplicationBaseTe
     @BeforeAll
     public void start() {
         project = MockProjectHelper.createBean(projectRepository);
-        otherProject = MockProjectHelper.createOtherBean(projectRepository);
+        otherProject = MockProjectHelper.createBean(projectRepository);
         invalidProject = MockProjectHelper.createNotPersistedBean();
     }
 

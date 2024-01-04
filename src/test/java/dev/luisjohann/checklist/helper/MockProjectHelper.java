@@ -1,28 +1,21 @@
 package dev.luisjohann.checklist.helper;
 
+import org.apache.commons.lang3.RandomStringUtils;
+
 import dev.luisjohann.checklist.domain.project.IProjectRepository;
 import dev.luisjohann.checklist.domain.project.Project;
 
 public class MockProjectHelper {
 
-    private static final String PROJECT_SLUG = "test_project";
-    private static final String PROJECT_OTHER_SLUG = "test_project_other";
-    private static final String PROJECT_INVALID_SLUG = "test_project_not_exists";
-
     public static final Project createBean(final IProjectRepository repository) {
-        var bean = new Project(PROJECT_SLUG, PROJECT_SLUG, null);
-        repository.createProject(bean);
-        return bean;
-    }
-
-    public static final Project createOtherBean(final IProjectRepository repository) {
-        var bean = new Project(PROJECT_OTHER_SLUG, PROJECT_OTHER_SLUG, null);
+        var bean = createNotPersistedBean();
         repository.createProject(bean);
         return bean;
     }
 
     public static final Project createNotPersistedBean() {
-        return new Project(PROJECT_INVALID_SLUG, PROJECT_INVALID_SLUG, null);
+        return new Project(RandomStringUtils.randomAlphabetic(5).toLowerCase(),
+                RandomStringUtils.randomAlphabetic(10).toUpperCase(), RandomStringUtils.randomAlphabetic(20));
     }
 
 }

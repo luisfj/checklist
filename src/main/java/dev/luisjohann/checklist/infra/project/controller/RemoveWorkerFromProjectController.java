@@ -15,14 +15,14 @@ import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Mono;
 
 @RestController
-@RequestMapping("/project")
+@RequestMapping("/worker")
 @RequiredArgsConstructor
 @Slf4j
 public class RemoveWorkerFromProjectController {
 
         final RemoveWorkerFromProjectService service;
 
-        @DeleteMapping("/worker/{project-slug}/{worker-name-slug}")
+        @DeleteMapping("/{project-slug}/{worker-name-slug}")
         @ResponseStatus(HttpStatus.OK)
         public Mono<ResponseEntity<Void>> removeWorker(
                         @PathVariable("project-slug") String projectSlug,

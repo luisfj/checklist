@@ -20,7 +20,7 @@ import dev.luisjohann.checklist.helper.MockProjectHelper;
 import dev.luisjohann.checklist.helper.MockWorkerHelper;
 
 public class RemoveWorkerFromProjectControllerTest extends ChecklistApplicationBaseTest {
-    private static final String URI = "/project/worker/%s/%s";
+    private static final String URI = "/worker/%s/%s";
 
     @Autowired
     private IProjectRepository projectRepository;

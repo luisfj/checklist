@@ -42,7 +42,7 @@ public class ListTodoControllerTest extends ChecklistApplicationBaseTest {
     @BeforeAll
     void start() {
         projectWithTodos = MockProjectHelper.createBean(projectRepository);
-        projectWithoutTodos = MockProjectHelper.createOtherBean(projectRepository);
+        projectWithoutTodos = MockProjectHelper.createBean(projectRepository);
         projectInvalid = MockProjectHelper.createNotPersistedBean();
 
         Todo todo = MockTodoHelper.createBean(todoRepository, projectWithTodos, null);
