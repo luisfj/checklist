@@ -12,7 +12,7 @@ import dev.luisjohann.checklist.infra.project.controller.request.CreateProjectRe
 import dev.luisjohann.checklist.infra.project.controller.response.CreateProjectResponse;
 
 public class CreateProjectControllerTest extends ChecklistApplicationBaseTest {
-    private static final String URI = "/project/create";
+    private static final String URI = "/project";
 
     @Test
     void createOneProject_thenReturnProject() {

@@ -27,7 +27,7 @@ public class CreateProjectController {
 
         final RegisterProjectService service;
 
-        @PostMapping("/create")
+        @PostMapping
         @ResponseStatus(HttpStatus.CREATED)
         public Mono<ResponseEntity<CreateProjectResponse>> createProject(@RequestBody CreateProjectRequest request) {
                 log.info("CREATE NEW PROJECT!");
