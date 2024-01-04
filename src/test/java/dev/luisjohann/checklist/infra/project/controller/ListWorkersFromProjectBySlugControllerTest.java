@@ -44,7 +44,7 @@ public class ListWorkersFromProjectBySlugControllerTest extends ChecklistApplica
                 projectInvalid = MockProjectHelper.createNotPersistedBean();
 
                 Worker worker = MockWorkerHelper.createBean(workerRepository, projectWithWorkers);
-                Worker worker2 = MockWorkerHelper.createOtherBean(workerRepository, projectWithWorkers);
+                Worker worker2 = MockWorkerHelper.createBean(workerRepository, projectWithWorkers);
 
                 responseExpected.add(
                                 new WorkersFromProjectResponse(worker2.getSlug(), worker2.getName()));
