@@ -8,7 +8,6 @@ import org.apache.logging.log4j.util.Strings;
 import org.springframework.stereotype.Service;
 
 import dev.luisjohann.checklist.application.todo.dto.UpdateTodoDto;
-import dev.luisjohann.checklist.domain.project.IProjectRepository;
 import dev.luisjohann.checklist.domain.project.IWorkerRepository;
 import dev.luisjohann.checklist.domain.project.Worker;
 import dev.luisjohann.checklist.domain.project.exceptions.WorkerWithSlugNotFoundException;
@@ -23,7 +22,6 @@ import reactor.core.publisher.Mono;
 public class UpdateTodoService {
 
     final IWorkerRepository workerRepository;
-    final IProjectRepository projectRepository;
     final ITodoRepository todoRepository;
 
     public Mono<Todo> updateTodo(UpdateTodoDto dto) {
