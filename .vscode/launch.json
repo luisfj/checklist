@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-ChecklistApplication<checklist>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "dev.luisjohann.checklist.ChecklistApplication",
+            "projectName": "checklist",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
