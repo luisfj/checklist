@@ -7,9 +7,11 @@ public interface ICommentRepository {
 
     Mono<Comment> createComment(Comment comment);
 
+    Mono<Void> removeComment(Comment comment);
+
     Mono<Comment> updateComment(Comment comment);
 
-    Mono<Comment> findByIdAndTodoId(String id, String todoId);
+    Mono<Comment> findByIdAndTodoIdAndProjectSlug(String id, String todoId, String projectSlug);
 
     Flux<Comment> listAllCommentsByTodoId(String todoId);
 }

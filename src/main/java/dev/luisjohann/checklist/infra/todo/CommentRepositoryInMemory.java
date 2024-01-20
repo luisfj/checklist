@@ -35,9 +35,11 @@ public class CommentRepositoryInMemory implements ICommentRepository {
     }
 
     @Override
-    public Mono<Comment> findByIdAndTodoId(String id, String todoId) {
+    public Mono<Comment> findByIdAndTodoIdAndProjectSlug(String id, String todoId, String projectSlug) {
         var comment = this.comments.stream()
-                .filter(c -> c.id().equals(id) && c.todo().getId().equals(todoId)).findFirst()
+                .filter(c -> c.id().equals(id) && c.todo().getId().equals(todoId)
+                        && c.todo().getProject().getSlug().equals(projectSlug))
+                .findFirst()
                 .orElse(null);
         return Objects.isNull(comment) ? Mono.empty() : Mono.just(comment);
     }
@@ -46,6 +48,13 @@ public class CommentRepositoryInMemory implements ICommentRepository {
     public Flux<Comment> listAllCommentsByTodoId(String todoId) {
         return Flux.fromIterable(
                 this.comments.stream().filter(c -> c.todo().getId().equals(todoId)).collect(Collectors.toList()));
+    }
+
+    @Override
+    public Mono<Void> removeComment(Comment comment) {
+        this.comments.removeIf(c -> c.id().equals(comment.id())
+                && c.todo().getId().equals(comment.todo().getId()));
+        return Mono.empty();
     }
 
 }
