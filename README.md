@@ -1,14 +1,18 @@
 <h1 align="center">
-  API de Controle de Tarefas
+  Estudo Clean Architecture e Api Reativa com Spring Webflux
 </h1>
 
 <p align="center">
  <img src="https://img.shields.io/badge/-LinkedIn-02569B?logo=linkedin&logoColor=white&style=fot-the-badge" alt="luis-fernando-johann" />
 </p>
 
-API que disponibiliza um controle de tarefas simplificado.
+- API que disponibiliza um controle de tarefas simplificado.
+- Projeto desenvolvido para fins de estudos de Clean Architecture e Api Reativa com Spring Webflux.
 
 ## Tecnologias
+
+- Java 17
+- Testes de integração
  
 - [Spring Boot](https://spring.io/projects/spring-boot)
 - [Spring Webflux](https://docs.spring.io/spring-framework/reference/web/webflux.html)
