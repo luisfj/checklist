@@ -1,6 +1,5 @@
 package dev.luisjohann.checklist.infra.todo.controller;
 
-import java.net.URI;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
@@ -30,7 +29,7 @@ public class UpdateTodoController {
         final UpdateTodoService service;
 
         @PutMapping("/{project-slug}/{id}")
-        public Mono<ResponseEntity<UpdateTodoResponse>> createTodo(@PathVariable("project-slug") String projectSlug,
+        public Mono<ResponseEntity<UpdateTodoResponse>> updateTodo(@PathVariable("project-slug") String projectSlug,
                         @PathVariable("id") String todoId,
                         @RequestBody UpdateTodoRequest request) {
                 log.info("UPDATE TODO ID={} PROJECT_ID={}!", todoId, projectSlug);
@@ -47,7 +46,7 @@ public class UpdateTodoController {
                                 : getMethod.apply(worker);
 
                 return Mono.just(
-                                ResponseEntity.created(URI.create(todo.getId()))
+                                ResponseEntity.ok()
                                                 .body(new UpdateTodoResponse(todo.getId(), todo.getTitle(),
                                                                 todo.getDescription(),
                                                                 workerCheck.apply(todo.getAssignedTo(),

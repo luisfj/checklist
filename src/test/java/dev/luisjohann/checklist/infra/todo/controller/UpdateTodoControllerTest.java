@@ -107,7 +107,7 @@ public class UpdateTodoControllerTest extends ChecklistApplicationBaseTest {
                 .accept(MediaType.APPLICATION_JSON)
                 .bodyValue(request)
                 .exchange()
-                .expectStatus().isCreated()
+                .expectStatus().isOk()
                 .expectBody(UpdateTodoResponse.class)
                 .value(resp -> {
                     assertEquals(todo.getId(), resp.id());
@@ -132,7 +132,7 @@ public class UpdateTodoControllerTest extends ChecklistApplicationBaseTest {
                 .accept(MediaType.APPLICATION_JSON)
                 .bodyValue(request)
                 .exchange()
-                .expectStatus().isCreated()
+                .expectStatus().isOk()
                 .expectBody(UpdateTodoResponse.class)
                 .value(resp -> {
                     assertEquals(todo.getId(), resp.id());
