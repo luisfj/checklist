@@ -23,13 +23,17 @@ public class CommentRepositoryInMemory implements ICommentRepository {
 
     @Override
     public Mono<Comment> updateComment(Comment comment) {
-        var idx = this.comments.indexOf(comment);
+        var filteredComment = this.comments.stream()
+                .filter(c -> c.id().equals(comment.id()) && c.todo().getId().equals(comment.todo().getId())
+                        && c.todo().getProject().getSlug().equals(comment.todo().getProject().getSlug()))
+                .findFirst()
+                .orElse(null);
 
-        if (idx < 0 || this.comments.get(idx).todo().equals(comment.todo())) {
+        if (Objects.isNull(filteredComment)) {
             return Mono.error(new CommentNotFoundException(comment.id(), comment.todo().getId()));
         }
 
-        this.comments.set(idx, comment);
+        this.comments.set(this.comments.indexOf(filteredComment), comment);
 
         return Mono.just(comment);
     }

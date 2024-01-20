@@ -14,7 +14,6 @@ import dev.luisjohann.checklist.domain.project.exceptions.WorkerRequiredExceptio
 import dev.luisjohann.checklist.domain.project.exceptions.WorkerWithSlugNotFoundException;
 import dev.luisjohann.checklist.domain.todo.Comment;
 import dev.luisjohann.checklist.domain.todo.ICommentRepository;
-import dev.luisjohann.checklist.domain.todo.ITodoRepository;
 import dev.luisjohann.checklist.domain.todo.exception.CommentNotFoundException;
 import lombok.RequiredArgsConstructor;
 import reactor.core.publisher.Mono;
@@ -24,7 +23,6 @@ import reactor.core.publisher.Mono;
 public class UpdateCommentService {
 
     final IWorkerRepository workerRepository;
-    final ITodoRepository todoRepository;
     final ICommentRepository commentRepository;
 
     public Mono<Comment> updateComment(UpdateCommentDto dto) {
@@ -49,7 +47,7 @@ public class UpdateCommentService {
             }
 
             Comment updateComment = buildComment(comment, updatedWorker, dto);
-            return commentRepository.createComment(updateComment);
+            return commentRepository.updateComment(updateComment);
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
