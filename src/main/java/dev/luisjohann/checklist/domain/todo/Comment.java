@@ -11,7 +11,8 @@ import dev.luisjohann.checklist.domain.todo.exception.EmptyCommentException;
 import dev.luisjohann.checklist.domain.todo.exception.TodoRequiredException;
 
 public record Comment(String id, Todo todo, String comment, Worker createdWorker, LocalDateTime createdAt,
-        LocalDateTime updatedAt, LocalDateTime deletedAt, Worker deleteWorker) implements Serializable {
+        Worker updatedWorker, LocalDateTime updatedAt, LocalDateTime deletedAt, Worker deleteWorker)
+        implements Serializable {
 
     public Comment {
         if (todo == null) {

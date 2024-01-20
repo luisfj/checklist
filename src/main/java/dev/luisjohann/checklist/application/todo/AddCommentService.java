@@ -60,7 +60,6 @@ public class AddCommentService {
 
     private Comment buildComment(Todo existingTodo, Worker createdWorker, AddCommentDto dto) {
         return new Comment(UUID.randomUUID().toString(), existingTodo, dto.comment(), createdWorker,
-                LocalDateTime.now(),
-                null, null, null);
+                LocalDateTime.now(), null, null, null, null);
     }
 }
