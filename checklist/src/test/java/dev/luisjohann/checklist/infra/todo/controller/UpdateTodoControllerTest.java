@@ -71,11 +71,11 @@ public class UpdateTodoControllerTest extends ChecklistApplicationBaseTest {
 
     @Test
     void testUpdateTodoWithOtherProjectSlug_returnProjectNotFoundException() {
-        var request = new UpdateTodoRequest(NEW_TITLE, NEW_DESCRIPTION, worker.getSlug());
+        var request = new UpdateTodoRequest(NEW_TITLE, NEW_DESCRIPTION, worker.slug());
 
         webTestClient
                 .put()
-                .uri(buildUri(otherProject.getSlug(), todo.getId()))
+                .uri(buildUri(otherProject.slug(), todo.id()))
                 .accept(MediaType.APPLICATION_JSON)
                 .bodyValue(request)
                 .exchange()
@@ -85,11 +85,11 @@ public class UpdateTodoControllerTest extends ChecklistApplicationBaseTest {
 
     @Test
     void testUpdateTodoWithWorkerOfOtherProject_returnWorkerNotFoundException() {
-        var request = new UpdateTodoRequest(NEW_TITLE, NEW_DESCRIPTION, otherWorker.getSlug());
+        var request = new UpdateTodoRequest(NEW_TITLE, NEW_DESCRIPTION, otherWorker.slug());
 
         webTestClient
                 .put()
-                .uri(buildUri(project.getSlug(), todo.getId()))
+                .uri(buildUri(project.slug(), todo.id()))
                 .accept(MediaType.APPLICATION_JSON)
                 .bodyValue(request)
                 .exchange()
@@ -99,25 +99,25 @@ public class UpdateTodoControllerTest extends ChecklistApplicationBaseTest {
 
     @Test
     void shouldUpdateTodoWithWorker() {
-        var request = new UpdateTodoRequest(NEW_TITLE, NEW_DESCRIPTION, worker.getSlug());
+        var request = new UpdateTodoRequest(NEW_TITLE, NEW_DESCRIPTION, worker.slug());
 
         webTestClient
                 .put()
-                .uri(buildUri(project.getSlug(), todo.getId()))
+                .uri(buildUri(project.slug(), todo.id()))
                 .accept(MediaType.APPLICATION_JSON)
                 .bodyValue(request)
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody(UpdateTodoResponse.class)
                 .value(resp -> {
-                    assertEquals(todo.getId(), resp.id());
+                    assertEquals(todo.id(), resp.id());
                     assertEquals(request.title(), resp.title());
                     assertEquals(request.description(), resp.description());
-                    assertNotEquals(todo.getTitle(), resp.title());
-                    assertNotEquals(todo.getDescription(), resp.description());
-                    assertEquals(worker.getSlug(), resp.workerAssignedSlug());
-                    assertEquals(worker.getName(), resp.workerAssignedName());
-                    assertNull(todo.getAssignedTo());
+                    assertNotEquals(todo.title(), resp.title());
+                    assertNotEquals(todo.description(), resp.description());
+                    assertEquals(worker.slug(), resp.workerAssignedSlug());
+                    assertEquals(worker.name(), resp.workerAssignedName());
+                    assertNull(todo.assignedTo());
                     assertNotNull(resp.workerAssignedSlug());
                 });
     }
@@ -128,19 +128,19 @@ public class UpdateTodoControllerTest extends ChecklistApplicationBaseTest {
 
         webTestClient
                 .put()
-                .uri(buildUri(project.getSlug(), todo.getId()))
+                .uri(buildUri(project.slug(), todo.id()))
                 .accept(MediaType.APPLICATION_JSON)
                 .bodyValue(request)
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody(UpdateTodoResponse.class)
                 .value(resp -> {
-                    assertEquals(todo.getId(), resp.id());
+                    assertEquals(todo.id(), resp.id());
                     assertEquals(request.title(), resp.title());
                     assertEquals(request.description(), resp.description());
-                    assertNotEquals(todo.getTitle(), resp.title());
-                    assertNotEquals(todo.getDescription(), resp.description());
-                    assertNull(todo.getAssignedTo());
+                    assertNotEquals(todo.title(), resp.title());
+                    assertNotEquals(todo.description(), resp.description());
+                    assertNull(todo.assignedTo());
                     assertNull(resp.workerAssignedSlug());
                     assertNull(resp.workerAssignedName());
                 });

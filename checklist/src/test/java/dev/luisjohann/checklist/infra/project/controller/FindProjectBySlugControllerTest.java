@@ -32,14 +32,14 @@ public class FindProjectBySlugControllerTest extends ChecklistApplicationBaseTes
     void getByExistingSlug_thenReturnProject() {
         webTestClient
                 .get()
-                .uri(BASE_URI + project.getSlug())
+                .uri(BASE_URI + project.slug())
                 .accept(MediaType.APPLICATION_JSON)
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody(FindProjectBySlugResponse.class).value(resp -> {
-                    assertEquals(resp.slug(), project.getSlug());
-                    assertEquals(resp.name(), project.getName());
-                    assertEquals(resp.description(), project.getDescription());
+                    assertEquals(resp.slug(), project.slug());
+                    assertEquals(resp.name(), project.name());
+                    assertEquals(resp.description(), project.description());
                 });
     }
 
@@ -47,7 +47,7 @@ public class FindProjectBySlugControllerTest extends ChecklistApplicationBaseTes
     void getByNotExistingSlug_thenReturnStatusNotFound() {
         webTestClient
                 .get()
-                .uri(BASE_URI + notExistsProject.getSlug())
+                .uri(BASE_URI + notExistsProject.slug())
                 .accept(MediaType.APPLICATION_JSON)
                 .exchange()
                 .expectStatus().isNotFound();

@@ -49,17 +49,17 @@ public class AddCommentController {
                 return Mono.just(
                                 ResponseEntity.created(URI.create(comment.id()))
                                                 .body(new AddCommentResponse(comment.id(), comment.comment(),
-                                                                comment.todo().getId(),
-                                                                comment.todo().getTitle(),
-                                                                comment.todo().getDescription(),
+                                                                comment.todo().id(),
+                                                                comment.todo().title(),
+                                                                comment.todo().description(),
                                                                 workerCheck.apply(comment.createdWorker(),
-                                                                                Worker::getSlug),
+                                                                                Worker::slug),
                                                                 workerCheck.apply(comment.createdWorker(),
-                                                                                Worker::getName),
+                                                                                Worker::name),
                                                                 workerCheck.apply(comment.deleteWorker(),
-                                                                                Worker::getSlug),
+                                                                                Worker::slug),
                                                                 workerCheck.apply(comment.deleteWorker(),
-                                                                                Worker::getName),
+                                                                                Worker::name),
                                                                 comment.createdAt(), comment.updatedAt(),
                                                                 comment.deletedAt())));
         }

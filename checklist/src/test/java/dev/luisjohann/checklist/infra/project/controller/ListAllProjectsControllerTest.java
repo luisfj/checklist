@@ -41,9 +41,9 @@ public class ListAllProjectsControllerTest extends ChecklistApplicationBaseTest 
                 .expectBody(FindAllProjectsResponse[].class).value(resp -> {
                     Assertions.assertThat(resp.length).isGreaterThan(0);
                     assertTrue(
-                            Stream.of(resp).anyMatch(r -> project.getSlug().equals(r.slug())
-                                    && project.getName().equals(r.name())
-                                    && project.getDescription().equals(r.description())));
+                            Stream.of(resp).anyMatch(r -> project.slug().equals(r.slug())
+                                    && project.name().equals(r.name())
+                                    && project.description().equals(r.description())));
                 });
     }
 

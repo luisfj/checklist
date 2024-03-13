@@ -70,11 +70,11 @@ public class CheckTodoControllerTest extends ChecklistApplicationBaseTest {
 
     @Test
     void testCheckTodoWithOtherProjectSlug_returnProjectNotFoundException() {
-        var request = new CheckTodoRequest(worker.getSlug());
+        var request = new CheckTodoRequest(worker.slug());
 
         webTestClient
                 .patch()
-                .uri(buildUri(otherProject.getSlug(), todo.getId()))
+                .uri(buildUri(otherProject.slug(), todo.id()))
                 .accept(MediaType.APPLICATION_JSON)
                 .bodyValue(request)
                 .exchange()
@@ -84,11 +84,11 @@ public class CheckTodoControllerTest extends ChecklistApplicationBaseTest {
 
     @Test
     void testCheckTodoWithWorkerOfOtherProject_returnWorkerNotFoundException() {
-        var request = new CheckTodoRequest(otherProjectWorker.getSlug());
+        var request = new CheckTodoRequest(otherProjectWorker.slug());
 
         webTestClient
                 .patch()
-                .uri(buildUri(project.getSlug(), todo.getId()))
+                .uri(buildUri(project.slug(), todo.id()))
                 .accept(MediaType.APPLICATION_JSON)
                 .bodyValue(request)
                 .exchange()
@@ -102,7 +102,7 @@ public class CheckTodoControllerTest extends ChecklistApplicationBaseTest {
 
         webTestClient
                 .patch()
-                .uri(buildUri(project.getSlug(), todo.getId()))
+                .uri(buildUri(project.slug(), todo.id()))
                 .accept(MediaType.APPLICATION_JSON)
                 .bodyValue(request)
                 .exchange()
@@ -112,54 +112,54 @@ public class CheckTodoControllerTest extends ChecklistApplicationBaseTest {
 
     @Test
     void shouldCheckTodoWithAssignedAndCheckedSameWorker() {
-        var request = new CheckTodoRequest(worker.getSlug());
+        var request = new CheckTodoRequest(worker.slug());
 
         webTestClient
                 .patch()
-                .uri(buildUri(project.getSlug(), todo.getId()))
+                .uri(buildUri(project.slug(), todo.id()))
                 .accept(MediaType.APPLICATION_JSON)
                 .bodyValue(request)
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody(CheckTodoResponse.class)
                 .value(resp -> {
-                    assertEquals(todo.getId(), resp.id());
-                    assertEquals(todo.getTitle(), resp.title());
-                    assertEquals(todo.getDescription(), resp.description());
+                    assertEquals(todo.id(), resp.id());
+                    assertEquals(todo.title(), resp.title());
+                    assertEquals(todo.description(), resp.description());
                     assertNotNull(resp.workerAssignedSlug());
-                    assertEquals(worker.getSlug(), resp.workerAssignedSlug());
-                    assertEquals(worker.getName(), resp.workerAssignedName());
-                    assertNull(todo.getCheckedWorker());
+                    assertEquals(worker.slug(), resp.workerAssignedSlug());
+                    assertEquals(worker.name(), resp.workerAssignedName());
+                    assertNull(todo.checkedWorker());
                     assertNotNull(resp.workerCheckedSlug());
                     assertNotNull(resp.checkedAt());
-                    assertEquals(worker.getSlug(), resp.workerCheckedSlug());
-                    assertEquals(worker.getName(), resp.workerCheckedName());
+                    assertEquals(worker.slug(), resp.workerCheckedSlug());
+                    assertEquals(worker.name(), resp.workerCheckedName());
                 });
     }
 
     @Test
     void shouldCheckTodoWithAssignedAndCheckedOtherWorker() {
-        var request = new CheckTodoRequest(otherWorker.getSlug());
+        var request = new CheckTodoRequest(otherWorker.slug());
 
         webTestClient
                 .patch()
-                .uri(buildUri(project.getSlug(), todo.getId()))
+                .uri(buildUri(project.slug(), todo.id()))
                 .accept(MediaType.APPLICATION_JSON)
                 .bodyValue(request)
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody(CheckTodoResponse.class)
                 .value(resp -> {
-                    assertEquals(todo.getId(), resp.id());
-                    assertEquals(todo.getTitle(), resp.title());
-                    assertEquals(todo.getDescription(), resp.description());
+                    assertEquals(todo.id(), resp.id());
+                    assertEquals(todo.title(), resp.title());
+                    assertEquals(todo.description(), resp.description());
                     assertNotNull(resp.workerAssignedSlug());
-                    assertEquals(worker.getSlug(), resp.workerAssignedSlug());
-                    assertEquals(worker.getName(), resp.workerAssignedName());
-                    assertNull(todo.getCheckedWorker());
+                    assertEquals(worker.slug(), resp.workerAssignedSlug());
+                    assertEquals(worker.name(), resp.workerAssignedName());
+                    assertNull(todo.checkedWorker());
                     assertNotNull(resp.workerCheckedSlug());
-                    assertEquals(otherWorker.getSlug(), resp.workerCheckedSlug());
-                    assertEquals(otherWorker.getName(), resp.workerCheckedName());
+                    assertEquals(otherWorker.slug(), resp.workerCheckedSlug());
+                    assertEquals(otherWorker.name(), resp.workerCheckedName());
                 });
     }
 

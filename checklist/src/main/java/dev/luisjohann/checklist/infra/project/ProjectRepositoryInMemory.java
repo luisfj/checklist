@@ -16,8 +16,8 @@ public class ProjectRepositoryInMemory implements IProjectRepository {
 
     @Override
     public Mono<Project> createProject(Project project) {
-        if (this.projects.stream().anyMatch(p -> p.getSlug().equals(project.getSlug()))) {
-            return Mono.error(new ProjectWithSameSlugException(project.getSlug()));
+        if (this.projects.stream().anyMatch(p -> p.slug().equals(project.slug()))) {
+            return Mono.error(new ProjectWithSameSlugException(project.slug()));
         }
         this.projects.add(project);
         return Mono.just(project);
@@ -25,7 +25,7 @@ public class ProjectRepositoryInMemory implements IProjectRepository {
 
     @Override
     public Mono<Project> findBySlug(String slug) {
-        var ret = this.projects.stream().filter(p -> p.getSlug().equals(slug)).findFirst().orElse(null);
+        var ret = this.projects.stream().filter(p -> p.slug().equals(slug)).findFirst().orElse(null);
 
         return Objects.isNull(ret) ? Mono.empty() : Mono.just(ret);
     }

@@ -60,8 +60,8 @@ public class AddCommentControllerTest extends ChecklistApplicationBaseTest {
 
     @Test
     void testAddCommentToTodoWithOtherProjectSlug_returnTodoNotFoundException() {
-        var request = new AddCommentRequest(comment, worker.getSlug());
-        var uri = buildUri(otherProject.getSlug(), todo.getId());
+        var request = new AddCommentRequest(comment, worker.slug());
+        var uri = buildUri(otherProject.slug(), todo.id());
 
         webTestClient
                 .post()
@@ -75,8 +75,8 @@ public class AddCommentControllerTest extends ChecklistApplicationBaseTest {
 
     @Test
     void testAddCommentToNotExistTodo_returnTodoNotFoundException() {
-        var request = new AddCommentRequest(comment, worker.getSlug());
-        var uri = buildUri(project.getSlug(), todoNotExist.getId());
+        var request = new AddCommentRequest(comment, worker.slug());
+        var uri = buildUri(project.slug(), todoNotExist.id());
 
         webTestClient
                 .post()
@@ -90,8 +90,8 @@ public class AddCommentControllerTest extends ChecklistApplicationBaseTest {
 
     @Test
     void testAddCommentToTodoWithWorkerOfOtherProject_returnWorkerNotFoundException() {
-        var request = new AddCommentRequest(comment, otherWorker.getSlug());
-        var uri = buildUri(project.getSlug(), todo.getId());
+        var request = new AddCommentRequest(comment, otherWorker.slug());
+        var uri = buildUri(project.slug(), todo.id());
 
         webTestClient
                 .post()
@@ -106,7 +106,7 @@ public class AddCommentControllerTest extends ChecklistApplicationBaseTest {
     @Test
     void testAddCommentToTodoWithoutWorker_returnWorkerRequiredException() {
         var request = new AddCommentRequest(comment, "");
-        var uri = buildUri(project.getSlug(), todo.getId());
+        var uri = buildUri(project.slug(), todo.id());
 
         webTestClient
                 .post()
@@ -120,8 +120,8 @@ public class AddCommentControllerTest extends ChecklistApplicationBaseTest {
 
     @Test
     void shouldAddCommentToTodoWithWorker() {
-        var request = new AddCommentRequest(comment, worker.getSlug());
-        var uri = buildUri(project.getSlug(), todo.getId());
+        var request = new AddCommentRequest(comment, worker.slug());
+        var uri = buildUri(project.slug(), todo.id());
 
         webTestClient
                 .post()
@@ -134,8 +134,8 @@ public class AddCommentControllerTest extends ChecklistApplicationBaseTest {
                 .value(resp -> {
                     assertNotNull(resp.id());
                     assertEquals(request.comment(), resp.comment());
-                    assertEquals(worker.getSlug(), resp.createdWorkerSlug());
-                    assertEquals(worker.getName(), resp.createdWorkerName());
+                    assertEquals(worker.slug(), resp.createdWorkerSlug());
+                    assertEquals(worker.name(), resp.createdWorkerName());
                     assertNull(resp.deleteWorkerName());
                     assertNull(resp.deleteWorkerSlug());
                     assertNull(resp.deletedAt());

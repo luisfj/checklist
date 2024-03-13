@@ -67,8 +67,8 @@ public class AddWorkerToTodoControllerTest extends ChecklistApplicationBaseTest 
 
     @Test
     void testAddWorkerToTodoWithOtherProjectSlug_returnProjectNotFoundException() {
-        var request = new AddWorkerToTodoRequest(worker.getSlug());
-        var uri = buildUri(otherProject.getSlug(), todo.getId());
+        var request = new AddWorkerToTodoRequest(worker.slug());
+        var uri = buildUri(otherProject.slug(), todo.id());
 
         webTestClient
                 .patch()
@@ -82,8 +82,8 @@ public class AddWorkerToTodoControllerTest extends ChecklistApplicationBaseTest 
 
     @Test
     void testAddWorkerToTodoWithWorkerOfOtherProject_returnWorkerNotFoundException() {
-        var request = new AddWorkerToTodoRequest(otherWorker.getSlug());
-        var uri = buildUri(project.getSlug(), todo.getId());
+        var request = new AddWorkerToTodoRequest(otherWorker.slug());
+        var uri = buildUri(project.slug(), todo.id());
 
         webTestClient
                 .patch()
@@ -98,7 +98,7 @@ public class AddWorkerToTodoControllerTest extends ChecklistApplicationBaseTest 
     @Test
     void testAddWorkerToTodoWithoutWorker_returnWorkerRequiredException() {
         var request = new AddWorkerToTodoRequest("");
-        var uri = buildUri(project.getSlug(), todo.getId());
+        var uri = buildUri(project.slug(), todo.id());
 
         webTestClient
                 .patch()
@@ -112,8 +112,8 @@ public class AddWorkerToTodoControllerTest extends ChecklistApplicationBaseTest 
 
     @Test
     void shouldAddWorkerToTodoWithWorker() {
-        var request = new AddWorkerToTodoRequest(worker.getSlug());
-        var uri = buildUri(project.getSlug(), todo.getId());
+        var request = new AddWorkerToTodoRequest(worker.slug());
+        var uri = buildUri(project.slug(), todo.id());
 
         webTestClient
                 .patch()
@@ -124,12 +124,12 @@ public class AddWorkerToTodoControllerTest extends ChecklistApplicationBaseTest 
                 .expectStatus().isOk()
                 .expectBody(AddWorkerToTodoResponse.class)
                 .value(resp -> {
-                    assertEquals(todo.getId(), resp.id());
-                    assertEquals(todo.getTitle(), resp.title());
-                    assertEquals(todo.getDescription(), resp.description());
-                    assertEquals(worker.getSlug(), resp.workerAssignedSlug());
-                    assertEquals(worker.getName(), resp.workerAssignedName());
-                    assertNull(todo.getAssignedTo());
+                    assertEquals(todo.id(), resp.id());
+                    assertEquals(todo.title(), resp.title());
+                    assertEquals(todo.description(), resp.description());
+                    assertEquals(worker.slug(), resp.workerAssignedSlug());
+                    assertEquals(worker.name(), resp.workerAssignedName());
+                    assertNull(todo.assignedTo());
                 });
     }
 }

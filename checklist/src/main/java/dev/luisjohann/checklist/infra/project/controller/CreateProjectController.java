@@ -37,9 +37,9 @@ public class CreateProjectController {
 
         private Mono<ResponseEntity<CreateProjectResponse>> convertFlatMap(Project project) {
                 return Mono.just(
-                                ResponseEntity.created(URI.create(project.getSlug()))
-                                                .body(new CreateProjectResponse(project.getSlug(),
-                                                                project.getName(),
-                                                                project.getDescription())));
+                                ResponseEntity.created(URI.create(project.slug()))
+                                                .body(new CreateProjectResponse(project.slug(),
+                                                                project.name(),
+                                                                project.description())));
         }
 }

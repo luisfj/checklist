@@ -49,18 +49,18 @@ public class CheckTodoController {
         private Mono<ResponseEntity<CheckTodoResponse>> convertFlatMap(Todo todo) {
                 return Mono.just(
                                 ResponseEntity.ok()
-                                                .body(new CheckTodoResponse(todo.getId(), todo.getTitle(),
-                                                                todo.getDescription(),
-                                                                workerCheck.apply(todo.getAssignedTo(),
-                                                                                Worker::getSlug),
-                                                                workerCheck.apply(todo.getAssignedTo(),
-                                                                                Worker::getName),
-                                                                todo.getCreatedAt(), todo.getUpdatedAt(),
-                                                                todo.getCheckedAt(),
-                                                                workerCheck.apply(todo.getCheckedWorker(),
-                                                                                Worker::getSlug),
-                                                                workerCheck.apply(todo.getCheckedWorker(),
-                                                                                Worker::getName))));
+                                                .body(new CheckTodoResponse(todo.id(), todo.title(),
+                                                                todo.description(),
+                                                                workerCheck.apply(todo.assignedTo(),
+                                                                                Worker::slug),
+                                                                workerCheck.apply(todo.assignedTo(),
+                                                                                Worker::name),
+                                                                todo.createdAt(), todo.updatedAt(),
+                                                                todo.checkedAt(),
+                                                                workerCheck.apply(todo.checkedWorker(),
+                                                                                Worker::slug),
+                                                                workerCheck.apply(todo.checkedWorker(),
+                                                                                Worker::name))));
         }
 
 }

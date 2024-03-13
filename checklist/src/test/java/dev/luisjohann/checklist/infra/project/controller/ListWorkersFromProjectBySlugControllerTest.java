@@ -47,16 +47,16 @@ public class ListWorkersFromProjectBySlugControllerTest extends ChecklistApplica
                 Worker worker2 = MockWorkerHelper.createBean(workerRepository, projectWithWorkers);
 
                 responseExpected.add(
-                                new WorkersFromProjectResponse(worker2.getSlug(), worker2.getName()));
+                                new WorkersFromProjectResponse(worker2.slug(), worker2.name()));
                 responseExpected.add(
-                                new WorkersFromProjectResponse(worker.getSlug(), worker.getName()));
+                                new WorkersFromProjectResponse(worker.slug(), worker.name()));
         }
 
         @Test
         void testWithExistingProjectSlug_thenReturnWorkersFromProject() {
                 webTestClient
                                 .get()
-                                .uri(BASE_URI + projectWithWorkers.getSlug())
+                                .uri(BASE_URI + projectWithWorkers.slug())
                                 .accept(MediaType.APPLICATION_JSON)
                                 .exchange()
                                 .expectStatus().isOk()
@@ -70,7 +70,7 @@ public class ListWorkersFromProjectBySlugControllerTest extends ChecklistApplica
         void testWithExistingProjectSlugWhereNotHaveWorkers_thenReturnWorkerNotFoundException() {
                 webTestClient
                                 .get()
-                                .uri(BASE_URI + projectWithoutWorkers.getSlug())
+                                .uri(BASE_URI + projectWithoutWorkers.slug())
                                 .accept(MediaType.APPLICATION_JSON)
                                 .exchange()
                                 .expectStatus().isNotFound()
@@ -81,7 +81,7 @@ public class ListWorkersFromProjectBySlugControllerTest extends ChecklistApplica
         void testWithNotExistingProjectSlug_thenReturnEmptyWorkers() {
                 webTestClient
                                 .get()
-                                .uri(BASE_URI + projectInvalid.getSlug())
+                                .uri(BASE_URI + projectInvalid.slug())
                                 .accept(MediaType.APPLICATION_JSON)
                                 .exchange()
                                 .expectStatus().isNotFound()

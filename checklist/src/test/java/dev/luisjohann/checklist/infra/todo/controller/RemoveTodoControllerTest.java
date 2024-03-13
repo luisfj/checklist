@@ -53,7 +53,7 @@ public class RemoveTodoControllerTest extends ChecklistApplicationBaseTest {
 
     @Test
     void testRemoveWithProjectNotExists_thenReturnProjectNotFoundException() {
-        var requestUri = buildUri(todo.getId(), projectInvalid.getSlug());
+        var requestUri = buildUri(todo.id(), projectInvalid.slug());
 
         webTestClient
                 .delete()
@@ -66,7 +66,7 @@ public class RemoveTodoControllerTest extends ChecklistApplicationBaseTest {
 
     @Test
     void testRemoveWithTodoIdNotExists_thenReturnTodoNotFoundException() {
-        var requestUri = buildUri(todoInvalid.getId(), project.getSlug());
+        var requestUri = buildUri(todoInvalid.id(), project.slug());
 
         webTestClient
                 .delete()
@@ -79,7 +79,7 @@ public class RemoveTodoControllerTest extends ChecklistApplicationBaseTest {
 
     @Test
     void shouldRemoveTodo() {
-        var requestUri = buildUri(todo.getId(), project.getSlug());
+        var requestUri = buildUri(todo.id(), project.slug());
 
         webTestClient
                 .delete()
@@ -88,7 +88,7 @@ public class RemoveTodoControllerTest extends ChecklistApplicationBaseTest {
                 .exchange()
                 .expectStatus().isOk();
 
-        assertNull(todoRepository.findByIdAndProjectSlug(todo.getId(), project.getSlug()).block());
+        assertNull(todoRepository.findByIdAndProjectSlug(todo.id(), project.slug()).block());
     }
 
     String buildUri(String todoId, String projectSlug) {

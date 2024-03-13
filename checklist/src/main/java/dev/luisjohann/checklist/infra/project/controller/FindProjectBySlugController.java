@@ -30,8 +30,8 @@ public class FindProjectBySlugController {
                                 .findBySlug(slug)
                                 .flatMap(project -> Mono.just(
                                                 ResponseEntity.ok().body(
-                                                                new FindProjectBySlugResponse(project.getSlug(),
-                                                                                project.getName(),
-                                                                                project.getDescription()))));
+                                                                new FindProjectBySlugResponse(project.slug(),
+                                                                                project.name(),
+                                                                                project.description()))));
         }
 }

@@ -15,7 +15,7 @@ import dev.luisjohann.checklist.infra.project.WorkerRepositoryInMemory;
 import dev.luisjohann.checklist.infra.todo.CommentRepositoryInMemory;
 import dev.luisjohann.checklist.infra.todo.TodoRepositoryInMemory;
 
-@TestConfiguration(proxyBeanMethods = true)
+@TestConfiguration
 @EnableWebFlux
 public class TestAppConfig {
 

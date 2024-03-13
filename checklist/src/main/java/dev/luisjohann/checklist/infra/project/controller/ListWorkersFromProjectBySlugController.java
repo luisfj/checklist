@@ -28,7 +28,7 @@ public class ListWorkersFromProjectBySlugController {
                 log.info("FIND WORKERS FROM PROJECT SLUG={}", projectSlug);
                 return service
                                 .findWorkersByProjectSlug(projectSlug)
-                                .map(worker -> new WorkersFromProjectResponse(worker.getSlug(), worker.getName()))
+                                .map(worker -> new WorkersFromProjectResponse(worker.slug(), worker.name()))
                                 .flatMap(Flux::just);
         }
 }

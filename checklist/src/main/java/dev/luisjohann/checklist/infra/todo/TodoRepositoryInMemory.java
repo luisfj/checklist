@@ -1,7 +1,10 @@
 package dev.luisjohann.checklist.infra.todo;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
+import java.util.function.Function;
+import java.util.function.Supplier;
 
 import dev.luisjohann.checklist.domain.todo.ITodoRepository;
 import dev.luisjohann.checklist.domain.todo.Todo;
@@ -11,44 +14,60 @@ import reactor.core.publisher.Mono;
 
 public class TodoRepositoryInMemory implements ITodoRepository {
 
-    private List<Todo> todos = new ArrayList<>();
+    private Map<String, Todo> todos = new HashMap<>();
 
     @Override
     public Mono<Todo> createTodo(Todo todo) {
-        this.todos.add(todo);
-        return Mono.just(todo);
+        var add = this.todos.putIfAbsent(todo.id(), todo);
+        return Mono.just(add == null ? todo : add);
     }
 
     @Override
     public Mono<Todo> updateTodo(Todo todo) {
-        var index = this.todos.indexOf(todo);
-        if (index < 0 || !this.todos.get(index).getProject().equals(todo.getProject())) {
-            return Mono.error(new TodoNotFoundException(todo.getId(), todo.getProject().getSlug()));
-        }
-        this.todos.set(index, todo);
-        return Mono.just(todo);
+        return verifyTodoExists(todo,
+                (bdTodo) -> {
+                    this.todos.replace(bdTodo.id(), todo);
+                    return Mono.just(todo);
+                },
+                () -> Mono.error(new TodoNotFoundException(todo.id(), todo.project().slug())));
     }
 
     @Override
     public Mono<Void> removeTodo(Todo todo) {
-        this.todos.removeIf(w -> w.getId().equals(todo.getId())
-                && w.getProject().getSlug().equals(todo.getProject().getSlug()));
-        return Mono.empty();
+        return verifyTodoExists(todo,
+                (bdTodo) -> {
+                    this.todos.remove(bdTodo.id());
+                    return Mono.empty();
+                },
+                () -> Mono.error(new TodoNotFoundException(todo.id(), todo.project().slug())));
     }
 
     @Override
     public Mono<Todo> findByIdAndProjectSlug(String id, String projectSlug) {
-        var todo = this.todos.stream().filter(t -> t.getId().equals(id) && t.getProject().getSlug().equals(projectSlug))
-                .findFirst();
-        if (todo.isPresent())
-            return Mono.just(todo.get());
-        return Mono.empty();
+        return verifyTodoExists(id, projectSlug, Mono::just, Mono::empty);
     }
 
     @Override
     public Flux<Todo> listAllTodosByProjectSlug(String projectSlug) {
         return Flux.fromIterable(
-                this.todos.stream().filter(w -> w.getProject().getSlug().equals(projectSlug)).toList());
+                this.todos.values().stream().filter(w -> w.project().slug().equals(projectSlug)).toList());
     }
 
+    private <T> Mono<T> verifyTodoExists(Todo todo, Function<Todo, Mono<T>> exists,
+            Supplier<Mono<T>> notExists) {
+        if (Objects.isNull(todo)) {
+            throw new TodoNotFoundException(null, null);
+        }
+
+        return verifyTodoExists(todo.id(), todo.project().slug(), exists, notExists);
+    }
+
+    private <T> Mono<T> verifyTodoExists(String id, String projectSlug, Function<Todo, Mono<T>> exists,
+            Supplier<Mono<T>> notExists) {
+        var todo = this.todos.get(id);
+        if (todo == null || !todo.project().slug().equals(projectSlug)) {
+            return notExists.get();
+        }
+        return exists.apply(todo);
+    }
 }

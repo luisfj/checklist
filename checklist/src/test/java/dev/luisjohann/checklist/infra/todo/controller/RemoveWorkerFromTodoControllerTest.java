@@ -63,7 +63,7 @@ public class RemoveWorkerFromTodoControllerTest extends ChecklistApplicationBase
 
     @Test
     void testRemoveWorkerFromTodoWithOtherProjectSlug_returnProjectNotFoundException() {
-        var uri = buildUri(otherProject.getSlug(), todo.getId());
+        var uri = buildUri(otherProject.slug(), todo.id());
 
         webTestClient
                 .patch()
@@ -76,7 +76,7 @@ public class RemoveWorkerFromTodoControllerTest extends ChecklistApplicationBase
 
     @Test
     void shouldRemoveWorkerFromTodo() {
-        var uri = buildUri(project.getSlug(), todo.getId());
+        var uri = buildUri(project.slug(), todo.id());
 
         webTestClient
                 .patch()
@@ -86,10 +86,10 @@ public class RemoveWorkerFromTodoControllerTest extends ChecklistApplicationBase
                 .expectStatus().isOk()
                 .expectBody(RemoveWorkerFromTodoResponse.class)
                 .value(resp -> {
-                    assertEquals(todo.getId(), resp.id());
-                    assertEquals(todo.getTitle(), resp.title());
-                    assertEquals(todo.getDescription(), resp.description());
-                    assertNotNull(todo.getAssignedTo());
+                    assertEquals(todo.id(), resp.id());
+                    assertEquals(todo.title(), resp.title());
+                    assertEquals(todo.description(), resp.description());
+                    assertNotNull(todo.assignedTo());
                     assertNull(resp.workerAssignedSlug());
                     assertNull(resp.workerAssignedName());
                 });

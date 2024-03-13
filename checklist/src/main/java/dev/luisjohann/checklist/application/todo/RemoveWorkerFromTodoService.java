@@ -39,8 +39,8 @@ public class RemoveWorkerFromTodoService {
     }
 
     private Todo buildTodo(Todo existingTodo) {
-        return new Todo(existingTodo.getId(), existingTodo.getTitle(), existingTodo.getDescription(),
-                existingTodo.getProject(), null, existingTodo.getCreatedAt(),
-                LocalDateTime.now(), existingTodo.getCheckedAt(), existingTodo.getCheckedWorker());
+        return new Todo(existingTodo.id(), existingTodo.title(), existingTodo.description(),
+                existingTodo.project(), null, existingTodo.createdAt(),
+                LocalDateTime.now(), existingTodo.checkedAt(), existingTodo.checkedWorker());
     }
 }

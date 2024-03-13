@@ -55,8 +55,8 @@ public class AddWorkerToTodoService {
     }
 
     private Todo buildTodo(Todo existingTodo, Worker assignedWorker) {
-        return new Todo(existingTodo.getId(), existingTodo.getTitle(), existingTodo.getDescription(),
-                existingTodo.getProject(), assignedWorker, existingTodo.getCreatedAt(),
-                LocalDateTime.now(), existingTodo.getCheckedAt(), existingTodo.getCheckedWorker());
+        return new Todo(existingTodo.id(), existingTodo.title(), existingTodo.description(),
+                existingTodo.project(), assignedWorker, existingTodo.createdAt(),
+                LocalDateTime.now(), existingTodo.checkedAt(), existingTodo.checkedWorker());
     }
 }

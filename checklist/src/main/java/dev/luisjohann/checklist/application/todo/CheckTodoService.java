@@ -55,8 +55,8 @@ public class CheckTodoService {
     }
 
     private Todo buildTodo(Todo existingTodo, Worker workerCheck, CheckTodoDto dto) {
-        return new Todo(existingTodo.getId(), existingTodo.getTitle(), existingTodo.getDescription(),
-                existingTodo.getProject(), existingTodo.getAssignedTo(), existingTodo.getCreatedAt(),
+        return new Todo(existingTodo.id(), existingTodo.title(), existingTodo.description(),
+                existingTodo.project(), existingTodo.assignedTo(), existingTodo.createdAt(),
                 LocalDateTime.now(), LocalDateTime.now(), workerCheck);
     }
 }

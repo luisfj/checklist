@@ -85,8 +85,8 @@ public class UpdateCommentControllerTest extends ChecklistApplicationBaseTest {
 
     @Test
     void testUpdateCommentWithOtherProjectSlug_returnCommentNotFoundException() {
-        var request = new UpdateCommentRequest(newComment, otherWorker.getSlug());
-        var uri = buildUri(otherProject.getSlug(), todo.getId(), comment.id());
+        var request = new UpdateCommentRequest(newComment, otherWorker.slug());
+        var uri = buildUri(otherProject.slug(), todo.id(), comment.id());
 
         webTestClient
                 .put()
@@ -100,8 +100,8 @@ public class UpdateCommentControllerTest extends ChecklistApplicationBaseTest {
 
     @Test
     void testUpdateCommentNotExistTodo_returnCommentNotFoundException() {
-        var request = new UpdateCommentRequest(newComment, otherWorker.getSlug());
-        var uri = buildUri(project.getSlug(), todoNotExist.getId(), comment.id());
+        var request = new UpdateCommentRequest(newComment, otherWorker.slug());
+        var uri = buildUri(project.slug(), todoNotExist.id(), comment.id());
 
         webTestClient
                 .put()
@@ -115,8 +115,8 @@ public class UpdateCommentControllerTest extends ChecklistApplicationBaseTest {
 
     @Test
     void testUpdateCommentWithNotPersistCommentId_returnCommentNotFoundException() {
-        var request = new UpdateCommentRequest(newComment, otherWorker.getSlug());
-        var uri = buildUri(project.getSlug(), todoNotExist.getId(), commentNotExists.id());
+        var request = new UpdateCommentRequest(newComment, otherWorker.slug());
+        var uri = buildUri(project.slug(), todoNotExist.id(), commentNotExists.id());
 
         webTestClient
                 .put()
@@ -130,8 +130,8 @@ public class UpdateCommentControllerTest extends ChecklistApplicationBaseTest {
 
     @Test
     void testUpdateCommentWithWorkerOfOtherProject_returnWorkerNotFoundException() {
-        var request = new UpdateCommentRequest(newComment, otherProjectWorker.getSlug());
-        var uri = buildUri(project.getSlug(), todo.getId(), comment.id());
+        var request = new UpdateCommentRequest(newComment, otherProjectWorker.slug());
+        var uri = buildUri(project.slug(), todo.id(), comment.id());
 
         webTestClient
                 .put()
@@ -146,7 +146,7 @@ public class UpdateCommentControllerTest extends ChecklistApplicationBaseTest {
     @Test
     void testUpdateCommentWithoutWorker_returnWorkerRequiredException() {
         var request = new UpdateCommentRequest(newComment, "");
-        var uri = buildUri(project.getSlug(), todo.getId(), comment.id());
+        var uri = buildUri(project.slug(), todo.id(), comment.id());
 
         webTestClient
                 .put()
@@ -160,8 +160,8 @@ public class UpdateCommentControllerTest extends ChecklistApplicationBaseTest {
 
     @Test
     void shouldUpdateComment() {
-        var request = new UpdateCommentRequest(newComment, otherWorker.getSlug());
-        var uri = buildUri(project.getSlug(), todo.getId(), comment.id());
+        var request = new UpdateCommentRequest(newComment, otherWorker.slug());
+        var uri = buildUri(project.slug(), todo.id(), comment.id());
 
         webTestClient
                 .put()
@@ -175,10 +175,10 @@ public class UpdateCommentControllerTest extends ChecklistApplicationBaseTest {
                     assertEquals(comment.id(), resp.id());
                     assertNotEquals(comment.comment(), resp.comment());
                     assertEquals(request.comment(), resp.comment());
-                    assertEquals(worker.getSlug(), resp.createdWorkerSlug());
-                    assertEquals(worker.getName(), resp.createdWorkerName());
-                    assertEquals(otherWorker.getName(), resp.updatedWorkerName());
-                    assertEquals(otherWorker.getName(), resp.updatedWorkerName());
+                    assertEquals(worker.slug(), resp.createdWorkerSlug());
+                    assertEquals(worker.name(), resp.createdWorkerName());
+                    assertEquals(otherWorker.name(), resp.updatedWorkerName());
+                    assertEquals(otherWorker.name(), resp.updatedWorkerName());
                     assertNull(resp.deleteWorkerName());
                     assertNull(resp.deleteWorkerSlug());
                     assertNull(resp.deletedAt());

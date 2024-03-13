@@ -52,8 +52,8 @@ public class UpdateTodoService {
     }
 
     private Todo buildTodo(Todo existingTodo, Worker workerAssignedTo, UpdateTodoDto dto) {
-        return new Todo(existingTodo.getId(), dto.title(), dto.description(), existingTodo.getProject(),
+        return new Todo(existingTodo.id(), dto.title(), dto.description(), existingTodo.project(),
                 workerAssignedTo,
-                existingTodo.getCreatedAt(), LocalDateTime.now(), null, null);
+                existingTodo.createdAt(), LocalDateTime.now(), null, null);
     }
 }

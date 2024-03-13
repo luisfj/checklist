@@ -70,11 +70,11 @@ public class UncheckTodoControllerTest extends ChecklistApplicationBaseTest {
 
     @Test
     void testUncheckTodoWithOtherProjectSlug_returnProjectNotFoundException() {
-        var request = new UncheckTodoRequest(worker.getSlug());
+        var request = new UncheckTodoRequest(worker.slug());
 
         webTestClient
                 .patch()
-                .uri(buildUri(otherProject.getSlug(), todo.getId()))
+                .uri(buildUri(otherProject.slug(), todo.id()))
                 .accept(MediaType.APPLICATION_JSON)
                 .bodyValue(request)
                 .exchange()
@@ -84,11 +84,11 @@ public class UncheckTodoControllerTest extends ChecklistApplicationBaseTest {
 
     @Test
     void testUncheckTodoWithWorkerOfOtherProject_returnWorkerNotFoundException() {
-        var request = new UncheckTodoRequest(otherProjectWorker.getSlug());
+        var request = new UncheckTodoRequest(otherProjectWorker.slug());
 
         webTestClient
                 .patch()
-                .uri(buildUri(project.getSlug(), todo.getId()))
+                .uri(buildUri(project.slug(), todo.id()))
                 .accept(MediaType.APPLICATION_JSON)
                 .bodyValue(request)
                 .exchange()
@@ -102,7 +102,7 @@ public class UncheckTodoControllerTest extends ChecklistApplicationBaseTest {
 
         webTestClient
                 .patch()
-                .uri(buildUri(project.getSlug(), todo.getId()))
+                .uri(buildUri(project.slug(), todo.id()))
                 .accept(MediaType.APPLICATION_JSON)
                 .bodyValue(request)
                 .exchange()
@@ -112,24 +112,24 @@ public class UncheckTodoControllerTest extends ChecklistApplicationBaseTest {
 
     @Test
     void shouldUncheckTodoWithAssignedAndCheckedSameWorker() {
-        var request = new UncheckTodoRequest(worker.getSlug());
+        var request = new UncheckTodoRequest(worker.slug());
 
         webTestClient
                 .patch()
-                .uri(buildUri(project.getSlug(), todo.getId()))
+                .uri(buildUri(project.slug(), todo.id()))
                 .accept(MediaType.APPLICATION_JSON)
                 .bodyValue(request)
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody(UncheckTodoResponse.class)
                 .value(resp -> {
-                    assertEquals(todo.getId(), resp.id());
-                    assertEquals(todo.getTitle(), resp.title());
-                    assertEquals(todo.getDescription(), resp.description());
+                    assertEquals(todo.id(), resp.id());
+                    assertEquals(todo.title(), resp.title());
+                    assertEquals(todo.description(), resp.description());
                     assertNotNull(resp.workerAssignedSlug());
-                    assertEquals(worker.getSlug(), resp.workerAssignedSlug());
-                    assertEquals(worker.getName(), resp.workerAssignedName());
-                    assertNotNull(todo.getCheckedWorker());
+                    assertEquals(worker.slug(), resp.workerAssignedSlug());
+                    assertEquals(worker.name(), resp.workerAssignedName());
+                    assertNotNull(todo.checkedWorker());
                     assertNull(resp.workerCheckedSlug());
                     assertNull(resp.workerCheckedSlug());
                     assertNull(resp.workerCheckedName());
@@ -138,24 +138,24 @@ public class UncheckTodoControllerTest extends ChecklistApplicationBaseTest {
 
     @Test
     void shouldUncheckTodoWithAssignedAndCheckedOtherWorker() {
-        var request = new UncheckTodoRequest(otherWorker.getSlug());
+        var request = new UncheckTodoRequest(otherWorker.slug());
 
         webTestClient
                 .patch()
-                .uri(buildUri(project.getSlug(), todo.getId()))
+                .uri(buildUri(project.slug(), todo.id()))
                 .accept(MediaType.APPLICATION_JSON)
                 .bodyValue(request)
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody(UncheckTodoResponse.class)
                 .value(resp -> {
-                    assertEquals(todo.getId(), resp.id());
-                    assertEquals(todo.getTitle(), resp.title());
-                    assertEquals(todo.getDescription(), resp.description());
+                    assertEquals(todo.id(), resp.id());
+                    assertEquals(todo.title(), resp.title());
+                    assertEquals(todo.description(), resp.description());
                     assertNotNull(resp.workerAssignedSlug());
-                    assertEquals(worker.getSlug(), resp.workerAssignedSlug());
-                    assertEquals(worker.getName(), resp.workerAssignedName());
-                    assertNotNull(todo.getCheckedWorker());
+                    assertEquals(worker.slug(), resp.workerAssignedSlug());
+                    assertEquals(worker.name(), resp.workerAssignedName());
+                    assertNotNull(todo.checkedWorker());
                     assertNull(resp.workerCheckedSlug());
                     assertNull(resp.workerCheckedSlug());
                     assertNull(resp.workerCheckedName());

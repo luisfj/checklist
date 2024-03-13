@@ -46,12 +46,12 @@ public class CreateTodoController {
                                 : getMethod.apply(worker);
 
                 return Mono.just(
-                                ResponseEntity.created(URI.create(todo.getId()))
-                                                .body(new CreateTodoResponse(todo.getId(), todo.getTitle(),
-                                                                todo.getDescription(),
-                                                                workerCheck.apply(todo.getAssignedTo(),
-                                                                                Worker::getSlug),
-                                                                workerCheck.apply(todo.getAssignedTo(),
-                                                                                Worker::getName))));
+                                ResponseEntity.created(URI.create(todo.id()))
+                                                .body(new CreateTodoResponse(todo.id(), todo.title(),
+                                                                todo.description(),
+                                                                workerCheck.apply(todo.assignedTo(),
+                                                                                Worker::slug),
+                                                                workerCheck.apply(todo.assignedTo(),
+                                                                                Worker::name))));
         }
 }

@@ -26,8 +26,8 @@ public class ListAllProjectsController {
                 log.info("FIND ALL PROJECTS");
                 return service
                                 .listAllProjects()
-                                .map(project -> new FindAllProjectsResponse(project.getSlug(), project.getName(),
-                                                project.getDescription()))
+                                .map(project -> new FindAllProjectsResponse(project.slug(), project.name(),
+                                                project.description()))
                                 .flatMap(Flux::just);
         }
 }

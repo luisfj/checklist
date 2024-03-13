@@ -51,7 +51,7 @@ public class RemoveWorkerFromProjectControllerTest extends ChecklistApplicationB
 
     @Test
     void testRemoveWorkerWithProjectNotExists_thenReturnProjectNotFoundException() {
-        var requestUri = buildUri(worker.getSlug(), projectInvalid.getSlug());
+        var requestUri = buildUri(worker.slug(), projectInvalid.slug());
 
         webTestClient
                 .delete()
@@ -64,7 +64,7 @@ public class RemoveWorkerFromProjectControllerTest extends ChecklistApplicationB
 
     @Test
     void testRemoveWorkerWithWorkerNameNotExists_thenReturnWorkerNotFoundException() {
-        var requestUri = buildUri(workerInvalid.getSlug(), project.getSlug());
+        var requestUri = buildUri(workerInvalid.slug(), project.slug());
 
         webTestClient
                 .delete()
@@ -77,7 +77,7 @@ public class RemoveWorkerFromProjectControllerTest extends ChecklistApplicationB
 
     @Test
     void shouldRemoveWorker() {
-        var requestUri = buildUri(worker.getSlug(), project.getSlug());
+        var requestUri = buildUri(worker.slug(), project.slug());
 
         webTestClient
                 .delete()
@@ -86,7 +86,7 @@ public class RemoveWorkerFromProjectControllerTest extends ChecklistApplicationB
                 .exchange()
                 .expectStatus().isOk();
 
-        assertNull(workerRepository.findByNameAndProjectSlug(worker.getSlug(), project.getSlug()).block());
+        assertNull(workerRepository.findByNameAndProjectSlug(worker.slug(), project.slug()).block());
     }
 
     String buildUri(String workerSlug, String projectSlug) {

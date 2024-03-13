@@ -40,8 +40,8 @@ public class AddWorkerToProjectController {
 
         private Mono<ResponseEntity<AddWorkerToProjectResponse>> convertFlatMap(Worker worker) {
                 return Mono.just(
-                                ResponseEntity.created(URI.create(worker.getSlug()))
-                                                .body(new AddWorkerToProjectResponse(worker.getSlug(),
-                                                                worker.getName())));
+                                ResponseEntity.created(URI.create(worker.slug()))
+                                                .body(new AddWorkerToProjectResponse(worker.slug(),
+                                                                worker.name())));
         }
 }

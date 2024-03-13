@@ -47,11 +47,11 @@ public class UpdateTodoController {
 
                 return Mono.just(
                                 ResponseEntity.ok()
-                                                .body(new UpdateTodoResponse(todo.getId(), todo.getTitle(),
-                                                                todo.getDescription(),
-                                                                workerCheck.apply(todo.getAssignedTo(),
-                                                                                Worker::getSlug),
-                                                                workerCheck.apply(todo.getAssignedTo(),
-                                                                                Worker::getName))));
+                                                .body(new UpdateTodoResponse(todo.id(), todo.title(),
+                                                                todo.description(),
+                                                                workerCheck.apply(todo.assignedTo(),
+                                                                                Worker::slug),
+                                                                workerCheck.apply(todo.assignedTo(),
+                                                                                Worker::name))));
         }
 }

@@ -57,19 +57,19 @@ public class ListTodoControllerTest extends ChecklistApplicationBaseTest {
                 ? null
                 : getMethod.apply(worker);
 
-        return new ListTodoResponse(todo.getId(), todo.getTitle(), todo.getDescription(),
-                workerCheck.apply(todo.getAssignedTo(), Worker::getSlug),
-                workerCheck.apply(todo.getAssignedTo(), Worker::getName),
-                todo.getCreatedAt(), todo.getUpdatedAt(), todo.getCheckedAt(),
-                workerCheck.apply(todo.getCheckedWorker(), Worker::getSlug),
-                workerCheck.apply(todo.getCheckedWorker(), Worker::getName));
+        return new ListTodoResponse(todo.id(), todo.title(), todo.description(),
+                workerCheck.apply(todo.assignedTo(), Worker::slug),
+                workerCheck.apply(todo.assignedTo(), Worker::name),
+                todo.createdAt(), todo.updatedAt(), todo.checkedAt(),
+                workerCheck.apply(todo.checkedWorker(), Worker::slug),
+                workerCheck.apply(todo.checkedWorker(), Worker::name));
     }
 
     @Test
     void testWithExistingProjectSlug_thenReturnTodosFromProject() {
         webTestClient
                 .get()
-                .uri(BASE_URI + projectWithTodos.getSlug())
+                .uri(BASE_URI + projectWithTodos.slug())
                 .accept(MediaType.APPLICATION_JSON)
                 .exchange()
                 .expectStatus().isOk()
@@ -83,7 +83,7 @@ public class ListTodoControllerTest extends ChecklistApplicationBaseTest {
     void testWithExistingProjectSlugWhereNotHaveTodos_thenReturnTodoNotFoundForTheProjectException() {
         webTestClient
                 .get()
-                .uri(BASE_URI + projectWithoutTodos.getSlug())
+                .uri(BASE_URI + projectWithoutTodos.slug())
                 .accept(MediaType.APPLICATION_JSON)
                 .exchange()
                 .expectStatus().isNotFound()
@@ -94,7 +94,7 @@ public class ListTodoControllerTest extends ChecklistApplicationBaseTest {
     void testWithNotExistingProjectSlug_thenReturnTodoNotFoundForTheProjectException() {
         webTestClient
                 .get()
-                .uri(BASE_URI + projectInvalid.getSlug())
+                .uri(BASE_URI + projectInvalid.slug())
                 .accept(MediaType.APPLICATION_JSON)
                 .exchange()
                 .expectStatus().isNotFound()

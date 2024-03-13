@@ -35,7 +35,7 @@ public class AddWorkerToProjectControllerTest extends ChecklistApplicationBaseTe
 
     @Test
     void testAddWorkerWithInvalidSlugProject_thenRetrieveError() {
-        var workerWithInvalidProjectSlug = buildWorker("Worker Name", invalidProject.getSlug());
+        var workerWithInvalidProjectSlug = buildWorker("Worker Name", invalidProject.slug());
 
         webTestClient
                 .post()
@@ -49,7 +49,7 @@ public class AddWorkerToProjectControllerTest extends ChecklistApplicationBaseTe
 
     @Test
     void testAddWorkersWithSameNameInSameProject_thenRetriveWorkerExists() {
-        var workerWithValidProjectSlug = buildWorker("Duplicate Worker Name", project.getSlug());
+        var workerWithValidProjectSlug = buildWorker("Duplicate Worker Name", project.slug());
 
         webTestClient
                 .post()
@@ -76,8 +76,8 @@ public class AddWorkerToProjectControllerTest extends ChecklistApplicationBaseTe
     @Test
     void shouldAddWorkersWithSameNameInDiferentProjects() {
         var workerName = "Duplicate Worker Dif Project";
-        var workerWithValidProjectSlug = buildWorker(workerName, project.getSlug());
-        var workerWithValidProjectSlug2 = buildWorker(workerName, otherProject.getSlug());
+        var workerWithValidProjectSlug = buildWorker(workerName, project.slug());
+        var workerWithValidProjectSlug2 = buildWorker(workerName, otherProject.slug());
 
         webTestClient
                 .post()
@@ -106,7 +106,7 @@ public class AddWorkerToProjectControllerTest extends ChecklistApplicationBaseTe
 
     @Test
     void shouldAddWorkerWithValidSlugProject() {
-        var workerWithValidProjectSlug = buildWorker("Correct Worker Name", project.getSlug());
+        var workerWithValidProjectSlug = buildWorker("Correct Worker Name", project.slug());
 
         webTestClient
                 .post()
