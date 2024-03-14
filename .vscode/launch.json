@@ -1,3 +1,12 @@
 {
-    "java.configuration.updateBuildConfiguration": "automatic"
+    "java.configuration.updateBuildConfiguration": "automatic",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "ChecklistApplication",
+            "request": "launch",
+            "mainClass": "dev.luisjohann.checklist.ChecklistApplication",
+            "projectName": "checklist"
+        }
+    ]
 }
