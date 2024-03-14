@@ -29,6 +29,6 @@ public class RegisterProjectService {
     }
 
     private Project buildProject(String slug, RegisterProjectDto dto) {
-        return new Project(slug, dto.name(), dto.description());
+        return new Project(null, slug, dto.name(), dto.description());
     }
 }
