@@ -1,4 +1,4 @@
-package dev.luisjohann.checklist.infra.project;
+package dev.luisjohann.checklist.infra.project.repository.memory;
 
 import java.util.ArrayList;
 import java.util.List;

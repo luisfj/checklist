@@ -1,4 +1,4 @@
-package dev.luisjohann.checklist.infra.project;
+package dev.luisjohann.checklist.infra.project.slug.memory;
 
 import dev.luisjohann.checklist.domain.project.ISlugGenerator;
 
