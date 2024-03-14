@@ -16,6 +16,7 @@ import dev.luisjohann.checklist.domain.project.Worker;
 import dev.luisjohann.checklist.domain.todo.Comment;
 import dev.luisjohann.checklist.infra.todo.controller.request.RemoveCommentRequest;
 import dev.luisjohann.checklist.infra.todo.controller.response.RemoveCommentResponse;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Mono;
@@ -28,6 +29,7 @@ public class RemoveCommentController {
 
         final RemoveCommentService service;
 
+        @Operation(summary = "Removes a todo comment", tags = { "Comments" })
         @PatchMapping("/{project-slug}/{todo-id}/{id}")
         public Mono<ResponseEntity<RemoveCommentResponse>> removeComment(
                         @PathVariable("project-slug") String projectSlug,

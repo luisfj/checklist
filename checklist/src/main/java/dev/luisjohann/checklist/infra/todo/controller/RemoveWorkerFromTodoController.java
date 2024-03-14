@@ -16,6 +16,7 @@ import dev.luisjohann.checklist.application.todo.dto.RemoveWorkerFromTodoDto;
 import dev.luisjohann.checklist.domain.project.Worker;
 import dev.luisjohann.checklist.domain.todo.Todo;
 import dev.luisjohann.checklist.infra.todo.controller.response.RemoveWorkerFromTodoResponse;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Mono;
@@ -32,6 +33,7 @@ public class RemoveWorkerFromTodoController {
                         ? null
                         : getMethod.apply(worker);
 
+        @Operation(summary = "Removes a TODO worker", tags = { "TODO" })
         @PatchMapping("/{project-slug}/{id}")
         @ResponseStatus(HttpStatus.OK)
         public Mono<ResponseEntity<RemoveWorkerFromTodoResponse>> removeWorkerFromTodo(

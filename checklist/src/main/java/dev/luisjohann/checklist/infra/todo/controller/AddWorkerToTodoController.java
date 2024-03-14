@@ -18,6 +18,7 @@ import dev.luisjohann.checklist.domain.project.Worker;
 import dev.luisjohann.checklist.domain.todo.Todo;
 import dev.luisjohann.checklist.infra.todo.controller.request.AddWorkerToTodoRequest;
 import dev.luisjohann.checklist.infra.todo.controller.response.AddWorkerToTodoResponse;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Mono;
@@ -34,6 +35,7 @@ public class AddWorkerToTodoController {
                         ? null
                         : getMethod.apply(worker);
 
+        @Operation(summary = "Adds a TODO worker", tags = { "TODO" })
         @PatchMapping("/{project-slug}/{id}")
         @ResponseStatus(HttpStatus.OK)
         public Mono<ResponseEntity<AddWorkerToTodoResponse>> addWorkerToTodo(

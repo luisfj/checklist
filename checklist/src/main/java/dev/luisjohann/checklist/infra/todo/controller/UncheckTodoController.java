@@ -18,6 +18,7 @@ import dev.luisjohann.checklist.domain.project.Worker;
 import dev.luisjohann.checklist.domain.todo.Todo;
 import dev.luisjohann.checklist.infra.todo.controller.request.UncheckTodoRequest;
 import dev.luisjohann.checklist.infra.todo.controller.response.UncheckTodoResponse;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Mono;
@@ -34,6 +35,7 @@ public class UncheckTodoController {
                         ? null
                         : getMethod.apply(worker);
 
+        @Operation(summary = "Unchecks a project TODO", tags = { "TODO" })
         @PatchMapping("/{project-slug}/{id}")
         @ResponseStatus(HttpStatus.OK)
         public Mono<ResponseEntity<UncheckTodoResponse>> uncheckTodo(@PathVariable("project-slug") String projectSlug,

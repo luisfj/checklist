@@ -16,6 +16,7 @@ import dev.luisjohann.checklist.domain.project.Worker;
 import dev.luisjohann.checklist.domain.todo.Comment;
 import dev.luisjohann.checklist.infra.todo.controller.request.UpdateCommentRequest;
 import dev.luisjohann.checklist.infra.todo.controller.response.UpdateCommentResponse;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Mono;
@@ -28,6 +29,7 @@ public class UpdateCommentController {
 
         final UpdateCommentService service;
 
+        @Operation(summary = "Updates a todo comment", tags = { "Comments" })
         @PutMapping("/{project-slug}/{todo-id}/{id}")
         public Mono<ResponseEntity<UpdateCommentResponse>> updateComment(
                         @PathVariable("project-slug") String projectSlug,

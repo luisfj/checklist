@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import dev.luisjohann.checklist.application.project.ListAllProjectsService;
 import dev.luisjohann.checklist.infra.project.controller.response.FindAllProjectsResponse;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Flux;
@@ -20,6 +21,7 @@ public class ListAllProjectsController {
 
         final ListAllProjectsService service;
 
+        @Operation(summary = "Retrieve all projects", tags = { "Project" })
         @GetMapping
         @ResponseStatus(HttpStatus.OK)
         public Flux<FindAllProjectsResponse> listAllProjects() {

@@ -16,6 +16,7 @@ import dev.luisjohann.checklist.domain.project.Worker;
 import dev.luisjohann.checklist.domain.todo.Todo;
 import dev.luisjohann.checklist.infra.todo.controller.request.UpdateTodoRequest;
 import dev.luisjohann.checklist.infra.todo.controller.response.UpdateTodoResponse;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Mono;
@@ -28,6 +29,7 @@ public class UpdateTodoController {
 
         final UpdateTodoService service;
 
+        @Operation(summary = "Updates a project TODO", tags = { "TODO" })
         @PutMapping("/{project-slug}/{id}")
         public Mono<ResponseEntity<UpdateTodoResponse>> updateTodo(@PathVariable("project-slug") String projectSlug,
                         @PathVariable("id") String todoId,

@@ -15,6 +15,7 @@ import dev.luisjohann.checklist.application.project.dto.RegisterProjectDto;
 import dev.luisjohann.checklist.domain.project.Project;
 import dev.luisjohann.checklist.infra.project.controller.request.CreateProjectRequest;
 import dev.luisjohann.checklist.infra.project.controller.response.CreateProjectResponse;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Mono;
@@ -27,6 +28,7 @@ public class CreateProjectController {
 
         final RegisterProjectService service;
 
+        @Operation(summary = "Create a project", tags = { "Project" })
         @PostMapping
         @ResponseStatus(HttpStatus.CREATED)
         public Mono<ResponseEntity<CreateProjectResponse>> createProject(@RequestBody CreateProjectRequest request) {

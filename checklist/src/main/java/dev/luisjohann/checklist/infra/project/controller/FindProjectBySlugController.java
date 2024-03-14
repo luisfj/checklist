@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import dev.luisjohann.checklist.application.project.FindBySlugProjectService;
 import dev.luisjohann.checklist.infra.project.controller.response.FindProjectBySlugResponse;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Mono;
@@ -22,6 +23,7 @@ public class FindProjectBySlugController {
 
         final FindBySlugProjectService service;
 
+        @Operation(summary = "Retrieve a project", tags = { "Project" })
         @GetMapping("/{slug}")
         @ResponseStatus(HttpStatus.OK)
         public Mono<ResponseEntity<FindProjectBySlugResponse>> getBySlug(@PathVariable("slug") String slug) {

@@ -17,6 +17,7 @@ import dev.luisjohann.checklist.domain.project.Worker;
 import dev.luisjohann.checklist.domain.todo.Comment;
 import dev.luisjohann.checklist.infra.todo.controller.request.AddCommentRequest;
 import dev.luisjohann.checklist.infra.todo.controller.response.AddCommentResponse;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Mono;
@@ -29,6 +30,7 @@ public class AddCommentController {
 
         final AddCommentService service;
 
+        @Operation(summary = "Adds a todo comment", tags = { "Comments" })
         @PostMapping("/{project-slug}/{todo-id}")
         public Mono<ResponseEntity<AddCommentResponse>> addComment(
                         @PathVariable("project-slug") String projectSlug,

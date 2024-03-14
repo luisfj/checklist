@@ -15,6 +15,7 @@ import dev.luisjohann.checklist.application.todo.dto.ListTodoDto;
 import dev.luisjohann.checklist.domain.project.Worker;
 import dev.luisjohann.checklist.domain.todo.Todo;
 import dev.luisjohann.checklist.infra.todo.controller.response.ListTodoResponse;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Flux;
@@ -31,6 +32,7 @@ public class ListTodoController {
                         ? null
                         : getMethod.apply(worker);
 
+        @Operation(summary = "Retrieves all project TODOs", tags = { "TODO" })
         @GetMapping("/{project-slug}")
         @ResponseStatus(HttpStatus.OK)
         public Flux<ListTodoResponse> listTodo(@PathVariable("project-slug") String projectSlug) {

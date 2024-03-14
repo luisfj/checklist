@@ -15,6 +15,7 @@ import dev.luisjohann.checklist.application.project.dto.AddWorkerToProjectDto;
 import dev.luisjohann.checklist.domain.project.Worker;
 import dev.luisjohann.checklist.infra.project.controller.request.AddWorkerToProjectRequest;
 import dev.luisjohann.checklist.infra.project.controller.response.AddWorkerToProjectResponse;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Mono;
@@ -27,6 +28,7 @@ public class AddWorkerToProjectController {
 
         final AddWorkerToProjectService service;
 
+        @Operation(summary = "Adds worker to the project", tags = { "Worker" })
         @PostMapping
         @ResponseStatus(HttpStatus.CREATED)
         public Mono<ResponseEntity<AddWorkerToProjectResponse>> addWorker(

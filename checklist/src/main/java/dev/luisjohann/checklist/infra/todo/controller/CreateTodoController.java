@@ -17,6 +17,7 @@ import dev.luisjohann.checklist.domain.project.Worker;
 import dev.luisjohann.checklist.domain.todo.Todo;
 import dev.luisjohann.checklist.infra.todo.controller.request.CreateTodoRequest;
 import dev.luisjohann.checklist.infra.todo.controller.response.CreateTodoResponse;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Mono;
@@ -29,6 +30,7 @@ public class CreateTodoController {
 
         final CreateTodoService service;
 
+        @Operation(summary = "Creates a project TODO", tags = { "TODO" })
         @PostMapping("/{project-slug}")
         public Mono<ResponseEntity<CreateTodoResponse>> createTodo(@PathVariable("project-slug") String projectSlug,
                         @RequestBody CreateTodoRequest request) {

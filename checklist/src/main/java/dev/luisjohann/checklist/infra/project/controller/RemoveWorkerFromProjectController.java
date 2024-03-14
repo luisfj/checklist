@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import dev.luisjohann.checklist.application.project.RemoveWorkerFromProjectService;
 import dev.luisjohann.checklist.application.project.dto.RemoveWorkerFromProjectDto;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Mono;
@@ -22,11 +23,12 @@ public class RemoveWorkerFromProjectController {
 
         final RemoveWorkerFromProjectService service;
 
-        @DeleteMapping("/{project-slug}/{worker-name-slug}")
+        @Operation(summary = "Removes a project worker", tags = { "Worker" })
+        @DeleteMapping("/{project-slug}/{worker-slug}")
         @ResponseStatus(HttpStatus.OK)
         public Mono<ResponseEntity<Void>> removeWorker(
                         @PathVariable("project-slug") String projectSlug,
-                        @PathVariable("worker-name-slug") String workerNameSlug) {
+                        @PathVariable("worker-slug") String workerNameSlug) {
                 log.info("REMOVE WORKER: {}, FROM PROJECT: {}!", workerNameSlug, projectSlug);
 
                 return service.removeWorkerFromProject(
