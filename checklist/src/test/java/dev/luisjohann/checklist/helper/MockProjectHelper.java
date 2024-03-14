@@ -14,7 +14,7 @@ public class MockProjectHelper {
     }
 
     public static final Project createNotPersistedBean() {
-        return new Project(RandomStringUtils.randomAlphabetic(5).toLowerCase(),
+        return new Project(null, RandomStringUtils.randomAlphabetic(5).toLowerCase(),
                 RandomStringUtils.randomAlphabetic(10).toUpperCase(), RandomStringUtils.randomAlphabetic(20));
     }
 

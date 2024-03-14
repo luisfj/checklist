@@ -9,9 +9,9 @@ import dev.luisjohann.checklist.domain.project.ISlugGenerator;
 import dev.luisjohann.checklist.domain.project.IWorkerRepository;
 import dev.luisjohann.checklist.domain.todo.ICommentRepository;
 import dev.luisjohann.checklist.domain.todo.ITodoRepository;
-import dev.luisjohann.checklist.infra.project.ProjectRepositoryInMemory;
-import dev.luisjohann.checklist.infra.project.SlugGeneratorTest;
-import dev.luisjohann.checklist.infra.project.WorkerRepositoryInMemory;
+import dev.luisjohann.checklist.infra.project.repository.memory.ProjectRepositoryInMemory;
+import dev.luisjohann.checklist.infra.project.repository.memory.WorkerRepositoryInMemory;
+import dev.luisjohann.checklist.infra.project.slug.memory.SlugGeneratorTest;
 import dev.luisjohann.checklist.infra.todo.CommentRepositoryInMemory;
 import dev.luisjohann.checklist.infra.todo.TodoRepositoryInMemory;
 
