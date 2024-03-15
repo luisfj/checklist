@@ -47,6 +47,6 @@ public class AddWorkerToProjectService {
     }
 
     private Worker buildWorker(Project project, AddWorkerToProjectDto dto) {
-        return new Worker(slugGenerator.generateSlugy(dto.workerName()), dto.workerName(), project);
+        return new Worker(null, slugGenerator.generateSlugy(dto.workerName()), dto.workerName(), project);
     }
 }

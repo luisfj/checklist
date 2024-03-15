@@ -22,7 +22,7 @@ public class ListWorkersFromProjectBySlugController {
 
         final ListWorkersFromProjectBySlugService service;
 
-        @Operation(summary = "Retrieve all project workers", tags = { "Project" })
+        @Operation(summary = "Retrieve all project workers", tags = { "Worker" })
         @GetMapping("/{project-slug}")
         @ResponseStatus(HttpStatus.OK)
         public Flux<WorkersFromProjectResponse> findWorkersByProjectSlug(

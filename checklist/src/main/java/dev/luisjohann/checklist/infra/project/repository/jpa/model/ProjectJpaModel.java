@@ -18,11 +18,11 @@ import lombok.NoArgsConstructor;
 public class ProjectJpaModel {
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
-        Long id;
+        private Long id;
         @Column(nullable = false)
-        String slug;
+        private String slug;
         @Column(nullable = false)
-        String name;
+        private String name;
         @Column(length = 2000)
-        String description;
+        private String description;
 }

@@ -15,7 +15,7 @@ public class MockWorkerHelper {
     }
 
     public static final Worker createNotPersistBean(final Project project) {
-        return new Worker(RandomStringUtils.randomAlphabetic(7).toLowerCase(),
+        return new Worker(null, RandomStringUtils.randomAlphabetic(7).toLowerCase(),
                 RandomStringUtils.randomAlphabetic(15).toUpperCase(), project);
     }
 

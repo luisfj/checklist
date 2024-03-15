@@ -38,7 +38,7 @@ public class CreateTodoControllerTest extends ChecklistApplicationBaseTest {
         var project = new Project(null, PROJECT_SLUG, PROJECT_SLUG, null);
         projectRepository.createProject(project);
         projectRepository.createProject(new Project(null, PROJECT_OTHER_SLUG, PROJECT_OTHER_SLUG, null));
-        workerRepository.createWorker(new Worker(WORKER_SLUG, WORKER_NAME, project));
+        workerRepository.createWorker(new Worker(null, WORKER_SLUG, WORKER_NAME, project));
     }
 
     @Test

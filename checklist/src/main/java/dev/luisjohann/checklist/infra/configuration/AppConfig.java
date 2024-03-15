@@ -13,7 +13,8 @@ import dev.luisjohann.checklist.domain.todo.ICommentRepository;
 import dev.luisjohann.checklist.domain.todo.ITodoRepository;
 import dev.luisjohann.checklist.infra.project.repository.jpa.ProjectRepositoryJpa;
 import dev.luisjohann.checklist.infra.project.repository.jpa.ProjectRepositoryJpaImpl;
-import dev.luisjohann.checklist.infra.project.repository.memory.WorkerRepositoryInMemory;
+import dev.luisjohann.checklist.infra.project.repository.jpa.WorkerRepositoryJpa;
+import dev.luisjohann.checklist.infra.project.repository.jpa.WorkerRepositoryJpaImpl;
 import dev.luisjohann.checklist.infra.project.slug.slugify.SlugifyGenerator;
 import dev.luisjohann.checklist.infra.todo.CommentRepositoryInMemory;
 import dev.luisjohann.checklist.infra.todo.TodoRepositoryInMemory;
@@ -35,8 +36,8 @@ public class AppConfig {
     }
 
     @Bean
-    public IWorkerRepository workerRepository() {
-        return new WorkerRepositoryInMemory();
+    public IWorkerRepository workerRepository(final WorkerRepositoryJpa repoJpa) {
+        return new WorkerRepositoryJpaImpl(repoJpa);
     }
 
     @Bean
