@@ -16,12 +16,16 @@ import dev.luisjohann.checklist.infra.project.repository.jpa.ProjectRepositoryJp
 import dev.luisjohann.checklist.infra.project.repository.jpa.WorkerRepositoryJpa;
 import dev.luisjohann.checklist.infra.project.repository.jpa.WorkerRepositoryJpaImpl;
 import dev.luisjohann.checklist.infra.project.slug.slugify.SlugifyGenerator;
-import dev.luisjohann.checklist.infra.todo.CommentRepositoryInMemory;
-import dev.luisjohann.checklist.infra.todo.TodoRepositoryInMemory;
+import dev.luisjohann.checklist.infra.todo.repository.jpa.TodoRepositoryJpa;
+import dev.luisjohann.checklist.infra.todo.repository.jpa.TodoRepositoryJpaImpl;
+import dev.luisjohann.checklist.infra.todo.repository.memory.CommentRepositoryInMemory;
 
 @Configuration
 @EnableWebFlux
-@EnableJpaRepositories(basePackages = "dev.luisjohann.checklist.infra.project.repository.jpa")
+@EnableJpaRepositories(basePackages = {
+        "dev.luisjohann.checklist.infra.project.repository.jpa",
+        "dev.luisjohann.checklist.infra.todo.repository.jpa"
+})
 @EnableTransactionManagement
 public class AppConfig {
 
@@ -41,8 +45,8 @@ public class AppConfig {
     }
 
     @Bean
-    public ITodoRepository todoRepository() {
-        return new TodoRepositoryInMemory();
+    public ITodoRepository todoRepository(final TodoRepositoryJpa repoJpa) {
+        return new TodoRepositoryJpaImpl(repoJpa);
     }
 
     @Bean
