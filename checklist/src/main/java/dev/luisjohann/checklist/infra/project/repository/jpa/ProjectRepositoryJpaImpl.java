@@ -4,7 +4,7 @@ import org.springframework.data.repository.NoRepositoryBean;
 
 import dev.luisjohann.checklist.domain.project.IProjectRepository;
 import dev.luisjohann.checklist.domain.project.Project;
-import dev.luisjohann.checklist.infra.project.repository.jpa.model.ConverterJpaUtil;
+import dev.luisjohann.checklist.infra.jpa.model.util.ConverterJpaUtil;
 import lombok.RequiredArgsConstructor;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -18,7 +18,7 @@ public class ProjectRepositoryJpaImpl implements IProjectRepository {
     @Override
     public Mono<Project> createProject(Project project) {
         var cProject = ConverterJpaUtil.convertRecordToProject(project);
-        var ret = ConverterJpaUtil.convertWokerToRecord(repositoryJpa.save(cProject));
+        var ret = ConverterJpaUtil.convertProjectToRecord(repositoryJpa.save(cProject));
         return Mono.just(ret);
     }
 

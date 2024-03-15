@@ -52,7 +52,7 @@ public class AddWorkerToTodoController {
         private Mono<ResponseEntity<AddWorkerToTodoResponse>> convertFlatMap(Todo todo) {
                 return Mono.just(
                                 ResponseEntity.ok()
-                                                .body(new AddWorkerToTodoResponse(todo.id(), todo.title(),
+                                                .body(new AddWorkerToTodoResponse(todo.id().toString(), todo.title(),
                                                                 todo.description(),
                                                                 workerCheck.apply(todo.assignedTo(),
                                                                                 Worker::slug),

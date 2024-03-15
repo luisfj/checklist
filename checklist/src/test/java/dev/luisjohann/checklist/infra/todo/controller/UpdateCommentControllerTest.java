@@ -5,6 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
+import java.util.UUID;
+
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
@@ -79,7 +81,7 @@ public class UpdateCommentControllerTest extends ChecklistApplicationBaseTest {
         comment = null;
     }
 
-    String buildUri(String projectSlug, String todoId, String id) {
+    String buildUri(String projectSlug, UUID todoId, String id) {
         return String.format(URI, projectSlug, todoId, id);
     }
 

@@ -2,6 +2,7 @@ package dev.luisjohann.checklist.application.todo;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
+import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 
 import org.apache.logging.log4j.util.Strings;
@@ -27,7 +28,8 @@ public class AddWorkerToTodoService {
 
     public Mono<Todo> addWorkerToTodo(AddWorkerToTodoDto dto) {
         try {
-            Todo existingTodo = todoRepository.findByIdAndProjectSlug(dto.todoId(), dto.projectSlug()).toFuture().get();
+            Todo existingTodo = todoRepository.findByIdAndProjectSlug(UUID.fromString(dto.todoId()), dto.projectSlug())
+                    .toFuture().get();
             if (Objects.isNull(existingTodo)) {
                 throw new TodoNotFoundException(dto.todoId(), dto.projectSlug());
             }

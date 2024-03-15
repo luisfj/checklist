@@ -2,6 +2,7 @@ package dev.luisjohann.checklist.domain.todo;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -11,7 +12,7 @@ import dev.luisjohann.checklist.domain.project.exceptions.ProjectRequiredExcepti
 import dev.luisjohann.checklist.domain.todo.exception.EmptyTodoDescriptionException;
 import dev.luisjohann.checklist.domain.todo.exception.EmptyTodoTitleException;
 
-public record Todo(String id, String title, String description, Project project, Worker assignedTo,
+public record Todo(UUID id, String title, String description, Project project, Worker assignedTo,
         LocalDateTime createdAt, LocalDateTime updatedAt, LocalDateTime checkedAt, Worker checkedWorker)
         implements Serializable {
 

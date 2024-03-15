@@ -52,7 +52,7 @@ public class UncheckTodoController {
         private Mono<ResponseEntity<UncheckTodoResponse>> convertFlatMap(Todo todo) {
                 return Mono.just(
                                 ResponseEntity.ok()
-                                                .body(new UncheckTodoResponse(todo.id(), todo.title(),
+                                                .body(new UncheckTodoResponse(todo.id().toString(), todo.title(),
                                                                 todo.description(),
                                                                 workerCheck.apply(todo.assignedTo(),
                                                                                 Worker::slug),

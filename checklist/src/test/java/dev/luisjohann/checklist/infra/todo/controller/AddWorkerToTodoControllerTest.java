@@ -3,6 +3,8 @@ package dev.luisjohann.checklist.infra.todo.controller;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
+import java.util.UUID;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -61,7 +63,7 @@ public class AddWorkerToTodoControllerTest extends ChecklistApplicationBaseTest 
         todo = null;
     }
 
-    String buildUri(String projectSlug, String todoId) {
+    String buildUri(String projectSlug, UUID todoId) {
         return String.format(URI, projectSlug, todoId);
     }
 
@@ -124,7 +126,7 @@ public class AddWorkerToTodoControllerTest extends ChecklistApplicationBaseTest 
                 .expectStatus().isOk()
                 .expectBody(AddWorkerToTodoResponse.class)
                 .value(resp -> {
-                    assertEquals(todo.id(), resp.id());
+                    assertEquals(todo.id(), UUID.fromString(resp.id()));
                     assertEquals(todo.title(), resp.title());
                     assertEquals(todo.description(), resp.description());
                     assertEquals(worker.slug(), resp.workerAssignedSlug());

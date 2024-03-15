@@ -44,7 +44,7 @@ public class ListTodoController {
         }
 
         private ListTodoResponse convertResponse(Todo todo) {
-                return new ListTodoResponse(todo.id(), todo.title(), todo.description(),
+                return new ListTodoResponse(todo.id().toString(), todo.title(), todo.description(),
                                 workerCheck.apply(todo.assignedTo(), Worker::slug),
                                 workerCheck.apply(todo.assignedTo(), Worker::name),
                                 todo.createdAt(), todo.updatedAt(), todo.checkedAt(),

@@ -49,7 +49,8 @@ public class RemoveWorkerFromTodoController {
         private Mono<ResponseEntity<RemoveWorkerFromTodoResponse>> convertFlatMap(Todo todo) {
                 return Mono.just(
                                 ResponseEntity.ok()
-                                                .body(new RemoveWorkerFromTodoResponse(todo.id(), todo.title(),
+                                                .body(new RemoveWorkerFromTodoResponse(todo.id().toString(),
+                                                                todo.title(),
                                                                 todo.description(),
                                                                 workerCheck.apply(todo.assignedTo(),
                                                                                 Worker::slug),

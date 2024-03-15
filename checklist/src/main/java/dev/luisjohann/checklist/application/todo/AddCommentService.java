@@ -31,7 +31,8 @@ public class AddCommentService {
 
     public Mono<Comment> addComment(AddCommentDto dto) {
         try {
-            Todo existingTodo = todoRepository.findByIdAndProjectSlug(dto.todoId(), dto.projectSlug()).toFuture().get();
+            Todo existingTodo = todoRepository.findByIdAndProjectSlug(UUID.fromString(dto.todoId()), dto.projectSlug())
+                    .toFuture().get();
             if (Objects.isNull(existingTodo)) {
                 throw new TodoNotFoundException(dto.todoId(), dto.projectSlug());
             }

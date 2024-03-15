@@ -2,7 +2,6 @@ package dev.luisjohann.checklist.application.todo;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
-import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 
 import org.apache.logging.log4j.util.Strings;
@@ -55,7 +54,7 @@ public class CreateTodoService {
     }
 
     private Todo buildTodo(Project project, Worker workerAssignedTo, CreateTodoDto dto) {
-        return new Todo(UUID.randomUUID().toString(), dto.title(), dto.description(), project, workerAssignedTo,
+        return new Todo(null, dto.title(), dto.description(), project, workerAssignedTo,
                 LocalDateTime.now(), null, null, null);
     }
 }

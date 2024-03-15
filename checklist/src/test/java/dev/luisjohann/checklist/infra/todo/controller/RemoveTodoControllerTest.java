@@ -2,6 +2,8 @@ package dev.luisjohann.checklist.infra.todo.controller;
 
 import static org.junit.jupiter.api.Assertions.assertNull;
 
+import java.util.UUID;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -91,7 +93,7 @@ public class RemoveTodoControllerTest extends ChecklistApplicationBaseTest {
         assertNull(todoRepository.findByIdAndProjectSlug(todo.id(), project.slug()).block());
     }
 
-    String buildUri(String todoId, String projectSlug) {
+    String buildUri(UUID todoId, String projectSlug) {
         return String.format(URI, projectSlug, todoId);
     }
 }

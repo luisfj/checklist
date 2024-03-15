@@ -12,8 +12,8 @@ import dev.luisjohann.checklist.domain.todo.ITodoRepository;
 import dev.luisjohann.checklist.infra.project.repository.memory.ProjectRepositoryInMemory;
 import dev.luisjohann.checklist.infra.project.repository.memory.WorkerRepositoryInMemory;
 import dev.luisjohann.checklist.infra.project.slug.memory.SlugGeneratorTest;
-import dev.luisjohann.checklist.infra.todo.CommentRepositoryInMemory;
-import dev.luisjohann.checklist.infra.todo.TodoRepositoryInMemory;
+import dev.luisjohann.checklist.infra.todo.repository.memory.CommentRepositoryInMemory;
+import dev.luisjohann.checklist.infra.todo.repository.memory.TodoRepositoryInMemory;
 
 @TestConfiguration
 @EnableWebFlux

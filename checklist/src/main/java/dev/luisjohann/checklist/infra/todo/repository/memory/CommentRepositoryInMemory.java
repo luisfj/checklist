@@ -1,8 +1,9 @@
-package dev.luisjohann.checklist.infra.todo;
+package dev.luisjohann.checklist.infra.todo.repository.memory;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import dev.luisjohann.checklist.domain.todo.Comment;
@@ -30,7 +31,7 @@ public class CommentRepositoryInMemory implements ICommentRepository {
                 .orElse(null);
 
         if (Objects.isNull(filteredComment)) {
-            return Mono.error(new CommentNotFoundException(comment.id(), comment.todo().id()));
+            return Mono.error(new CommentNotFoundException(comment.id(), comment.todo().id().toString()));
         }
 
         this.comments.set(this.comments.indexOf(filteredComment), comment);
@@ -41,7 +42,7 @@ public class CommentRepositoryInMemory implements ICommentRepository {
     @Override
     public Mono<Comment> findByIdAndTodoIdAndProjectSlug(String id, String todoId, String projectSlug) {
         var comment = this.comments.stream()
-                .filter(c -> c.id().equals(id) && c.todo().id().equals(todoId)
+                .filter(c -> c.id().equals(id) && c.todo().id().equals(UUID.fromString(todoId))
                         && c.todo().project().slug().equals(projectSlug))
                 .findFirst()
                 .orElse(null);

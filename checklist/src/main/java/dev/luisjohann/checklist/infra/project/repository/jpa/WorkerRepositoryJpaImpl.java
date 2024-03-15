@@ -7,9 +7,8 @@ import org.springframework.data.repository.NoRepositoryBean;
 
 import dev.luisjohann.checklist.domain.project.IWorkerRepository;
 import dev.luisjohann.checklist.domain.project.Worker;
-import dev.luisjohann.checklist.infra.project.repository.jpa.model.ConverterJpaUtil;
+import dev.luisjohann.checklist.infra.jpa.model.util.ConverterJpaUtil;
 import dev.luisjohann.checklist.infra.project.repository.jpa.model.WorkerJpaModel;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -21,13 +20,13 @@ public class WorkerRepositoryJpaImpl implements IWorkerRepository {
     final WorkerRepositoryJpa repositoryJpa;
 
     Function<Optional<WorkerJpaModel>, Mono<Worker>> fnWorkerOpt = (
-            workerOpt) -> workerOpt.isPresent() ? Mono.just(ConverterJpaUtil.convertWokerToRecord(workerOpt.get()))
+            workerOpt) -> workerOpt.isPresent() ? Mono.just(ConverterJpaUtil.convertWorkerToRecord(workerOpt.get()))
                     : Mono.empty();
 
     @Override
     public Mono<Worker> createWorker(Worker worker) {
         var cWorker = ConverterJpaUtil.convertRecordToWorker(worker);
-        var ret = ConverterJpaUtil.convertWokerToRecord(this.repositoryJpa.save(cWorker));
+        var ret = ConverterJpaUtil.convertWorkerToRecord(this.repositoryJpa.save(cWorker));
         return Mono.just(ret);
     }
 
@@ -38,7 +37,6 @@ public class WorkerRepositoryJpaImpl implements IWorkerRepository {
     }
 
     @Override
-    @Transactional
     public Mono<Worker> findByNameAndProjectSlug(String name, String projectSlug) {
         var workerOpt = this.repositoryJpa.findByNameAndProjectSlug(name, projectSlug);
         return fnWorkerOpt.apply(workerOpt);
@@ -53,7 +51,7 @@ public class WorkerRepositoryJpaImpl implements IWorkerRepository {
     @Override
     public Flux<Worker> findByProjectSlug(String slug) {
         return Flux.fromIterable(this.repositoryJpa.findByProjectSlug(slug).stream()
-                .map(ConverterJpaUtil::convertWokerToRecord).toList());
+                .map(ConverterJpaUtil::convertWorkerToRecord).toList());
     }
 
 }

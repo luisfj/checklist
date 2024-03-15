@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
+import java.util.UUID;
+
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,8 +56,8 @@ public class AddCommentControllerTest extends ChecklistApplicationBaseTest {
         comment = "Test Todo Comment";
     }
 
-    String buildUri(String projectSlug, String todoId) {
-        return String.format(URI, projectSlug, todoId);
+    String buildUri(String projectSlug, UUID todoId) {
+        return String.format(URI, projectSlug, todoId.toString());
     }
 
     @Test

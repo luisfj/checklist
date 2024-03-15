@@ -51,7 +51,7 @@ public class CheckTodoController {
         private Mono<ResponseEntity<CheckTodoResponse>> convertFlatMap(Todo todo) {
                 return Mono.just(
                                 ResponseEntity.ok()
-                                                .body(new CheckTodoResponse(todo.id(), todo.title(),
+                                                .body(new CheckTodoResponse(todo.id().toString(), todo.title(),
                                                                 todo.description(),
                                                                 workerCheck.apply(todo.assignedTo(),
                                                                                 Worker::slug),

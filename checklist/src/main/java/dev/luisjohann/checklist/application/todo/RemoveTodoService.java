@@ -1,6 +1,7 @@
 package dev.luisjohann.checklist.application.todo;
 
 import java.util.Objects;
+import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 
 import org.springframework.stereotype.Service;
@@ -20,7 +21,8 @@ public class RemoveTodoService {
 
     public Mono<Void> removeTodo(RemoveTodoDto dto) {
         try {
-            Todo existingTodo = todoRepository.findByIdAndProjectSlug(dto.id(), dto.projectSlug()).toFuture().get();
+            Todo existingTodo = todoRepository.findByIdAndProjectSlug(UUID.fromString(dto.id()), dto.projectSlug())
+                    .toFuture().get();
             if (Objects.isNull(existingTodo)) {
                 throw new TodoNotFoundException(dto.id(), dto.projectSlug());
             }

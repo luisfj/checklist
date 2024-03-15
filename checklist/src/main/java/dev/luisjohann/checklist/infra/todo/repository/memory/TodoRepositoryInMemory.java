@@ -1,8 +1,9 @@
-package dev.luisjohann.checklist.infra.todo;
+package dev.luisjohann.checklist.infra.todo.repository.memory;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.UUID;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
@@ -14,12 +15,14 @@ import reactor.core.publisher.Mono;
 
 public class TodoRepositoryInMemory implements ITodoRepository {
 
-    private Map<String, Todo> todos = new HashMap<>();
+    private Map<UUID, Todo> todos = new HashMap<>();
 
     @Override
     public Mono<Todo> createTodo(Todo todo) {
-        var add = this.todos.putIfAbsent(todo.id(), todo);
-        return Mono.just(add == null ? todo : add);
+        var newTodo = new Todo(UUID.randomUUID(), todo.title(), todo.description(), todo.project(), todo.assignedTo(),
+                todo.createdAt(), todo.updatedAt(), todo.checkedAt(), todo.checkedWorker());
+        var add = this.todos.putIfAbsent(newTodo.id(), newTodo);
+        return Mono.just(add == null ? newTodo : add);
     }
 
     @Override
@@ -29,7 +32,7 @@ public class TodoRepositoryInMemory implements ITodoRepository {
                     this.todos.replace(bdTodo.id(), todo);
                     return Mono.just(todo);
                 },
-                () -> Mono.error(new TodoNotFoundException(todo.id(), todo.project().slug())));
+                () -> Mono.error(new TodoNotFoundException(todo.id().toString(), todo.project().slug())));
     }
 
     @Override
@@ -39,11 +42,11 @@ public class TodoRepositoryInMemory implements ITodoRepository {
                     this.todos.remove(bdTodo.id());
                     return Mono.empty();
                 },
-                () -> Mono.error(new TodoNotFoundException(todo.id(), todo.project().slug())));
+                () -> Mono.error(new TodoNotFoundException(todo.id().toString(), todo.project().slug())));
     }
 
     @Override
-    public Mono<Todo> findByIdAndProjectSlug(String id, String projectSlug) {
+    public Mono<Todo> findByIdAndProjectSlug(UUID id, String projectSlug) {
         return verifyTodoExists(id, projectSlug, Mono::just, Mono::empty);
     }
 
@@ -62,7 +65,7 @@ public class TodoRepositoryInMemory implements ITodoRepository {
         return verifyTodoExists(todo.id(), todo.project().slug(), exists, notExists);
     }
 
-    private <T> Mono<T> verifyTodoExists(String id, String projectSlug, Function<Todo, Mono<T>> exists,
+    private <T> Mono<T> verifyTodoExists(UUID id, String projectSlug, Function<Todo, Mono<T>> exists,
             Supplier<Mono<T>> notExists) {
         var todo = this.todos.get(id);
         if (todo == null || !todo.project().slug().equals(projectSlug)) {

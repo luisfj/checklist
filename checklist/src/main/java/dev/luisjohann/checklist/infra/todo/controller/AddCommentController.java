@@ -51,7 +51,7 @@ public class AddCommentController {
                 return Mono.just(
                                 ResponseEntity.created(URI.create(comment.id()))
                                                 .body(new AddCommentResponse(comment.id(), comment.comment(),
-                                                                comment.todo().id(),
+                                                                comment.todo().id().toString(),
                                                                 comment.todo().title(),
                                                                 comment.todo().description(),
                                                                 workerCheck.apply(comment.createdWorker(),

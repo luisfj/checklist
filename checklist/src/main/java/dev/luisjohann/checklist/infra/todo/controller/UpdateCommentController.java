@@ -51,7 +51,7 @@ public class UpdateCommentController {
                 return Mono.just(
                                 ResponseEntity.ok()
                                                 .body(new UpdateCommentResponse(comment.id(), comment.comment(),
-                                                                comment.todo().id(),
+                                                                comment.todo().id().toString(),
                                                                 comment.todo().title(),
                                                                 comment.todo().description(),
                                                                 workerCheck.apply(comment.createdWorker(),

@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
+import java.util.UUID;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -64,7 +66,7 @@ public class UncheckTodoControllerTest extends ChecklistApplicationBaseTest {
         todo = null;
     }
 
-    String buildUri(String projectSlug, String todoId) {
+    String buildUri(String projectSlug, UUID todoId) {
         return String.format(URI, projectSlug, todoId);
     }
 
@@ -123,7 +125,7 @@ public class UncheckTodoControllerTest extends ChecklistApplicationBaseTest {
                 .expectStatus().isOk()
                 .expectBody(UncheckTodoResponse.class)
                 .value(resp -> {
-                    assertEquals(todo.id(), resp.id());
+                    assertEquals(todo.id(), UUID.fromString(resp.id()));
                     assertEquals(todo.title(), resp.title());
                     assertEquals(todo.description(), resp.description());
                     assertNotNull(resp.workerAssignedSlug());
@@ -149,7 +151,7 @@ public class UncheckTodoControllerTest extends ChecklistApplicationBaseTest {
                 .expectStatus().isOk()
                 .expectBody(UncheckTodoResponse.class)
                 .value(resp -> {
-                    assertEquals(todo.id(), resp.id());
+                    assertEquals(todo.id(), UUID.fromString(resp.id()));
                     assertEquals(todo.title(), resp.title());
                     assertEquals(todo.description(), resp.description());
                     assertNotNull(resp.workerAssignedSlug());

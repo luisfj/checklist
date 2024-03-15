@@ -1,5 +1,7 @@
 package dev.luisjohann.checklist.domain.todo;
 
+import java.util.UUID;
+
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -11,7 +13,7 @@ public interface ITodoRepository {
 
     Mono<Void> removeTodo(Todo todo);
 
-    Mono<Todo> findByIdAndProjectSlug(String id, String projectSlug);
+    Mono<Todo> findByIdAndProjectSlug(UUID id, String projectSlug);
 
     Flux<Todo> listAllTodosByProjectSlug(String projectSlug);
 }
