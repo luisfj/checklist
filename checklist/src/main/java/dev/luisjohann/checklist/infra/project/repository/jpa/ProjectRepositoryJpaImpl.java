@@ -17,8 +17,8 @@ public class ProjectRepositoryJpaImpl implements IProjectRepository {
 
     @Override
     public Mono<Project> createProject(Project project) {
-        var cProject = ConverterJpaUtil.convertRecordToProject(project);
-        var ret = ConverterJpaUtil.convertProjectToRecord(repositoryJpa.save(cProject));
+        var cProject = ConverterJpaUtil.convertFromRecord(project);
+        var ret = ConverterJpaUtil.convertToRecord(repositoryJpa.save(cProject));
         return Mono.just(ret);
     }
 

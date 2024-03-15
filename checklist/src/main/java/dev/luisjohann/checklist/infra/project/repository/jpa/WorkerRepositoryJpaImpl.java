@@ -20,13 +20,13 @@ public class WorkerRepositoryJpaImpl implements IWorkerRepository {
     final WorkerRepositoryJpa repositoryJpa;
 
     Function<Optional<WorkerJpaModel>, Mono<Worker>> fnWorkerOpt = (
-            workerOpt) -> workerOpt.isPresent() ? Mono.just(ConverterJpaUtil.convertWorkerToRecord(workerOpt.get()))
+            workerOpt) -> workerOpt.isPresent() ? Mono.just(ConverterJpaUtil.convertToRecord(workerOpt.get()))
                     : Mono.empty();
 
     @Override
     public Mono<Worker> createWorker(Worker worker) {
-        var cWorker = ConverterJpaUtil.convertRecordToWorker(worker);
-        var ret = ConverterJpaUtil.convertWorkerToRecord(this.repositoryJpa.save(cWorker));
+        var cWorker = ConverterJpaUtil.convertFromRecord(worker);
+        var ret = ConverterJpaUtil.convertToRecord(this.repositoryJpa.save(cWorker));
         return Mono.just(ret);
     }
 
@@ -44,14 +44,14 @@ public class WorkerRepositoryJpaImpl implements IWorkerRepository {
 
     @Override
     public Mono<Void> removeWorker(Worker worker) {
-        repositoryJpa.delete(ConverterJpaUtil.convertRecordToWorker(worker));
+        repositoryJpa.delete(ConverterJpaUtil.convertFromRecord(worker));
         return Mono.empty();
     }
 
     @Override
     public Flux<Worker> findByProjectSlug(String slug) {
         return Flux.fromIterable(this.repositoryJpa.findByProjectSlug(slug).stream()
-                .map(ConverterJpaUtil::convertWorkerToRecord).toList());
+                .map(ConverterJpaUtil::convertToRecord).toList());
     }
 
 }

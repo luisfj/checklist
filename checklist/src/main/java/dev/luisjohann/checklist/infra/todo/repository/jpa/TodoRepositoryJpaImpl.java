@@ -24,8 +24,8 @@ public class TodoRepositoryJpaImpl implements ITodoRepository {
 
     @Override
     public Mono<Todo> createTodo(Todo todo) {
-        var cTodo = ConverterJpaUtil.convertRecordToTodo(todo);
-        var ret = ConverterJpaUtil.convertTodoToRecord(repositoryJpa.save(cTodo));
+        var cTodo = ConverterJpaUtil.convertFromRecord(todo);
+        var ret = ConverterJpaUtil.convertToRecord(repositoryJpa.save(cTodo));
         return Mono.just(ret);
     }
 
@@ -35,9 +35,9 @@ public class TodoRepositoryJpaImpl implements ITodoRepository {
                 (bdTodo) -> {
                     bdTodo.setTitle(todo.title());
                     bdTodo.setDescription(todo.description());
-                    bdTodo.setAssignedTo(ConverterJpaUtil.convertRecordToWorker(todo.assignedTo()));
+                    bdTodo.setAssignedTo(ConverterJpaUtil.convertFromRecord(todo.assignedTo()));
                     bdTodo.setCheckedAt(todo.checkedAt());
-                    bdTodo.setCheckedWorker(ConverterJpaUtil.convertRecordToWorker(todo.checkedWorker()));
+                    bdTodo.setCheckedWorker(ConverterJpaUtil.convertFromRecord(todo.checkedWorker()));
 
                     this.repositoryJpa.save(bdTodo);
                     return Mono.just(todo);
@@ -58,13 +58,13 @@ public class TodoRepositoryJpaImpl implements ITodoRepository {
     @Override
     public Mono<Todo> findByIdAndProjectSlug(UUID id, String projectSlug) {
         return verifyTodoExists(id, projectSlug,
-                (todoModel) -> Mono.just(ConverterJpaUtil.convertTodoToRecord(todoModel)), Mono::empty);
+                (todoModel) -> Mono.just(ConverterJpaUtil.convertToRecord(todoModel)), Mono::empty);
     }
 
     @Override
     public Flux<Todo> listAllTodosByProjectSlug(String projectSlug) {
         return Flux.fromIterable(
-                this.repositoryJpa.findAllByProjectSlug(projectSlug).stream().map(ConverterJpaUtil::convertTodoToRecord)
+                this.repositoryJpa.findAllByProjectSlug(projectSlug).stream().map(ConverterJpaUtil::convertToRecord)
                         .toList());
     }
 
