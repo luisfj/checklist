@@ -50,7 +50,8 @@ public class RemoveCommentController {
 
                 return Mono.just(
                                 ResponseEntity.ok()
-                                                .body(new RemoveCommentResponse(comment.id(), comment.comment(),
+                                                .body(new RemoveCommentResponse(comment.id().toString(),
+                                                                comment.comment(),
                                                                 comment.todo().id().toString(),
                                                                 comment.todo().title(),
                                                                 comment.todo().description(),
@@ -62,9 +63,9 @@ public class RemoveCommentController {
                                                                                 Worker::slug),
                                                                 workerCheck.apply(comment.updatedWorker(),
                                                                                 Worker::name),
-                                                                workerCheck.apply(comment.deleteWorker(),
+                                                                workerCheck.apply(comment.deletedWorker(),
                                                                                 Worker::slug),
-                                                                workerCheck.apply(comment.deleteWorker(),
+                                                                workerCheck.apply(comment.deletedWorker(),
                                                                                 Worker::name),
                                                                 comment.createdAt(), comment.updatedAt(),
                                                                 comment.deletedAt())));

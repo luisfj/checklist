@@ -4,9 +4,11 @@ import java.util.Objects;
 
 import dev.luisjohann.checklist.domain.project.Project;
 import dev.luisjohann.checklist.domain.project.Worker;
+import dev.luisjohann.checklist.domain.todo.Comment;
 import dev.luisjohann.checklist.domain.todo.Todo;
 import dev.luisjohann.checklist.infra.project.repository.jpa.model.ProjectJpaModel;
 import dev.luisjohann.checklist.infra.project.repository.jpa.model.WorkerJpaModel;
+import dev.luisjohann.checklist.infra.todo.repository.jpa.model.CommentJpaModel;
 import dev.luisjohann.checklist.infra.todo.repository.jpa.model.TodoJpaModel;
 
 public class ConverterJpaUtil {
@@ -50,4 +52,29 @@ public class ConverterJpaUtil {
                         ConverterJpaUtil.convertToRecord(model.getCheckedWorker()));
     }
 
+    public static CommentJpaModel convertFromRecord(Comment rec) {
+        return Objects.isNull(rec) ? null
+                : new CommentJpaModel(rec.id(),
+                        ConverterJpaUtil.convertFromRecord(rec.todo()),
+                        rec.comment(),
+                        ConverterJpaUtil.convertFromRecord(rec.createdWorker()),
+                        rec.createdAt(),
+                        ConverterJpaUtil.convertFromRecord(rec.updatedWorker()),
+                        rec.updatedAt(),
+                        ConverterJpaUtil.convertFromRecord(rec.deletedWorker()),
+                        rec.deletedAt());
+    }
+
+    public static Comment convertToRecord(CommentJpaModel model) {
+        return Objects.isNull(model) ? null
+                : new Comment(model.getId(),
+                        ConverterJpaUtil.convertToRecord(model.getTodo()),
+                        model.getComment(),
+                        ConverterJpaUtil.convertToRecord(model.getCreatedWorker()),
+                        model.getCreatedAt(),
+                        ConverterJpaUtil.convertToRecord(model.getUpdatedWorker()),
+                        model.getUpdatedAt(),
+                        ConverterJpaUtil.convertToRecord(model.getDeletedWorker()),
+                        model.getDeletedAt());
+    }
 }

@@ -21,7 +21,7 @@ public class MockCommentHelper {
     }
 
     public static final Comment createNotPersistBean(final Todo todo, final Worker createdWorker) {
-        return new Comment(UUID.randomUUID().toString(), todo, RandomStringUtils.randomAlphabetic(15),
+        return new Comment(UUID.randomUUID(), todo, RandomStringUtils.randomAlphabetic(15),
                 createdWorker, LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS), null, null, null, null);
     }
 

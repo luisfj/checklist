@@ -16,9 +16,10 @@ import dev.luisjohann.checklist.infra.project.repository.jpa.ProjectRepositoryJp
 import dev.luisjohann.checklist.infra.project.repository.jpa.WorkerRepositoryJpa;
 import dev.luisjohann.checklist.infra.project.repository.jpa.WorkerRepositoryJpaImpl;
 import dev.luisjohann.checklist.infra.project.slug.slugify.SlugifyGenerator;
+import dev.luisjohann.checklist.infra.todo.repository.jpa.CommentRepositoryJpa;
+import dev.luisjohann.checklist.infra.todo.repository.jpa.CommentRepositoryJpaImpl;
 import dev.luisjohann.checklist.infra.todo.repository.jpa.TodoRepositoryJpa;
 import dev.luisjohann.checklist.infra.todo.repository.jpa.TodoRepositoryJpaImpl;
-import dev.luisjohann.checklist.infra.todo.repository.memory.CommentRepositoryInMemory;
 
 @Configuration
 @EnableWebFlux
@@ -50,8 +51,8 @@ public class AppConfig {
     }
 
     @Bean
-    public ICommentRepository commentRepository() {
-        return new CommentRepositoryInMemory();
+    public ICommentRepository commentRepository(final CommentRepositoryJpa repoJpa) {
+        return new CommentRepositoryJpaImpl(repoJpa);
     }
 
 }

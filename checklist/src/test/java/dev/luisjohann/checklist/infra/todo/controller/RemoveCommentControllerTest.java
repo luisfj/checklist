@@ -77,7 +77,7 @@ public class RemoveCommentControllerTest extends ChecklistApplicationBaseTest {
         comment = null;
     }
 
-    String buildUri(String projectSlug, UUID todoId, String id) {
+    String buildUri(String projectSlug, UUID todoId, UUID id) {
         return String.format(URI, projectSlug, todoId, id);
     }
 
@@ -170,7 +170,7 @@ public class RemoveCommentControllerTest extends ChecklistApplicationBaseTest {
                 .expectStatus().isOk()
                 .expectBody(RemoveCommentResponse.class)
                 .value(resp -> {
-                    assertEquals(comment.id(), resp.id());
+                    assertEquals(comment.id(), UUID.fromString(resp.id()));
                     assertEquals(comment.comment(), resp.comment());
                     assertEquals(worker.slug(), resp.createdWorkerSlug());
                     assertEquals(worker.name(), resp.createdWorkerName());

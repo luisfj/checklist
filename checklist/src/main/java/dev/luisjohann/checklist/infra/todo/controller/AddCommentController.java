@@ -49,8 +49,8 @@ public class AddCommentController {
                                 : getMethod.apply(worker);
 
                 return Mono.just(
-                                ResponseEntity.created(URI.create(comment.id()))
-                                                .body(new AddCommentResponse(comment.id(), comment.comment(),
+                                ResponseEntity.created(URI.create(comment.id().toString()))
+                                                .body(new AddCommentResponse(comment.id().toString(), comment.comment(),
                                                                 comment.todo().id().toString(),
                                                                 comment.todo().title(),
                                                                 comment.todo().description(),
@@ -58,9 +58,9 @@ public class AddCommentController {
                                                                                 Worker::slug),
                                                                 workerCheck.apply(comment.createdWorker(),
                                                                                 Worker::name),
-                                                                workerCheck.apply(comment.deleteWorker(),
+                                                                workerCheck.apply(comment.deletedWorker(),
                                                                                 Worker::slug),
-                                                                workerCheck.apply(comment.deleteWorker(),
+                                                                workerCheck.apply(comment.deletedWorker(),
                                                                                 Worker::name),
                                                                 comment.createdAt(), comment.updatedAt(),
                                                                 comment.deletedAt())));

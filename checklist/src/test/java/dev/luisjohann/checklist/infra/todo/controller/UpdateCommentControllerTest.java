@@ -81,7 +81,7 @@ public class UpdateCommentControllerTest extends ChecklistApplicationBaseTest {
         comment = null;
     }
 
-    String buildUri(String projectSlug, UUID todoId, String id) {
+    String buildUri(String projectSlug, UUID todoId, UUID id) {
         return String.format(URI, projectSlug, todoId, id);
     }
 
@@ -174,7 +174,7 @@ public class UpdateCommentControllerTest extends ChecklistApplicationBaseTest {
                 .expectStatus().isOk()
                 .expectBody(UpdateCommentResponse.class)
                 .value(resp -> {
-                    assertEquals(comment.id(), resp.id());
+                    assertEquals(comment.id(), UUID.fromString(resp.id()));
                     assertNotEquals(comment.comment(), resp.comment());
                     assertEquals(request.comment(), resp.comment());
                     assertEquals(worker.slug(), resp.createdWorkerSlug());

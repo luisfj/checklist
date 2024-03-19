@@ -31,7 +31,7 @@ public class CommentRepositoryInMemory implements ICommentRepository {
                 .orElse(null);
 
         if (Objects.isNull(filteredComment)) {
-            return Mono.error(new CommentNotFoundException(comment.id(), comment.todo().id().toString()));
+            return Mono.error(new CommentNotFoundException(comment.id().toString(), comment.todo().id().toString()));
         }
 
         this.comments.set(this.comments.indexOf(filteredComment), comment);
@@ -40,9 +40,9 @@ public class CommentRepositoryInMemory implements ICommentRepository {
     }
 
     @Override
-    public Mono<Comment> findByIdAndTodoIdAndProjectSlug(String id, String todoId, String projectSlug) {
+    public Mono<Comment> findByIdAndTodoIdAndProjectSlug(UUID id, UUID todoId, String projectSlug) {
         var comment = this.comments.stream()
-                .filter(c -> c.id().equals(id) && c.todo().id().equals(UUID.fromString(todoId))
+                .filter(c -> c.id().equals(id) && c.todo().id().equals(todoId)
                         && c.todo().project().slug().equals(projectSlug))
                 .findFirst()
                 .orElse(null);
@@ -50,9 +50,11 @@ public class CommentRepositoryInMemory implements ICommentRepository {
     }
 
     @Override
-    public Flux<Comment> listAllCommentsByTodoId(String todoId) {
+    public Flux<Comment> listAllCommentsByTodoIdAndTodoProjectSlug(UUID todoId, String projectSlug) {
         return Flux.fromIterable(
-                this.comments.stream().filter(c -> c.todo().id().equals(todoId)).collect(Collectors.toList()));
+                this.comments.stream()
+                        .filter(c -> c.todo().id().equals(todoId) && c.todo().project().slug().equals(projectSlug))
+                        .collect(Collectors.toList()));
     }
 
     @Override

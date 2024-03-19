@@ -2,6 +2,7 @@ package dev.luisjohann.checklist.application.todo;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
+import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 
 import org.apache.logging.log4j.util.Strings;
@@ -28,7 +29,9 @@ public class UpdateCommentService {
     public Mono<Comment> updateComment(UpdateCommentDto dto) {
         try {
             Comment comment = commentRepository
-                    .findByIdAndTodoIdAndProjectSlug(dto.id(), dto.todoId(), dto.projectSlug()).toFuture().get();
+                    .findByIdAndTodoIdAndProjectSlug(UUID.fromString(dto.id()), UUID.fromString(dto.todoId()),
+                            dto.projectSlug())
+                    .toFuture().get();
 
             if (Objects.isNull(comment)) {
                 throw new CommentNotFoundException(dto.id(), dto.todoId());
@@ -58,7 +61,7 @@ public class UpdateCommentService {
 
     private Comment buildComment(Comment existingComment, Worker updatedWorker, UpdateCommentDto dto) {
         return new Comment(existingComment.id(), existingComment.todo(), dto.comment(), existingComment.createdWorker(),
-                existingComment.createdAt(), updatedWorker, LocalDateTime.now(), existingComment.deletedAt(),
-                existingComment.deleteWorker());
+                existingComment.createdAt(), updatedWorker, LocalDateTime.now(), existingComment.deletedWorker(),
+                existingComment.deletedAt());
     }
 }
