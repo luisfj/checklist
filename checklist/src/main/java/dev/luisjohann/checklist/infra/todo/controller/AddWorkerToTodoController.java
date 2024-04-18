@@ -42,7 +42,7 @@ public class AddWorkerToTodoController {
                         @PathVariable("project-slug") String projectSlug,
                         @PathVariable("id") String todoId,
                         @RequestBody AddWorkerToTodoRequest request) {
-                log.info("ADD WORKER TO TODO!");
+                log.info("ADD WORKER TO TODO! ");
 
                 return service.addWorkerToTodo(
                                 new AddWorkerToTodoDto(todoId, request.workerSlug(), projectSlug))
